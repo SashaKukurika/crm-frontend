@@ -3,6 +3,7 @@ import {IOrder} from "../../interfaces/order.interface";
 import {orderService} from "../../services/order.service";
 import {Order} from "../Order/Order";
 import {OrderForm} from "../OrderForm/OrderForm";
+import './Orders.css'
 
 const Orders = () => {
     const [orders, setOrders] = useState<IOrder[]>([]);
@@ -14,7 +15,10 @@ const Orders = () => {
     }, [updateOrdersSearch])
     return (
         <div>
-            <OrderForm setUpdateOrdersSearch={setUpdateOrdersSearch}/>
+            <div className={'Orders_page_management'}>
+                <OrderForm setUpdateOrdersSearch={setUpdateOrdersSearch}/>
+                <button>exel</button>
+            </div>
             {orders.map(order => <Order order={order} key={order.id}/>)}
         </div>
     );

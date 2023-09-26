@@ -1,0 +1,59 @@
+option {
+    font-weight: normal;
+    display: block;
+    /*white-space-collapse: collapse;*/
+    /*text-wrap: nowrap;*/
+    min-height: 1.2em;
+    padding: 2px 1px;
+}
+
+.Filter_orders {
+    display: flex;
+    padding: 5px;
+}
+
+.Filter_orders_inputs {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.Filter_orders_input {
+    margin: 0 auto;
+    padding: 3px 5px;
+    width: 16.66%;
+}
+
+.Form_input {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.Form_input_input {
+    background: #eee;
+    border: 2px solid #eee;
+    border-radius: 10px;
+    font-size: .875rem;
+    outline: none;
+    padding: 15px;
+    transition: 1s;
+}
+
+.Form_select {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.Form_select_select {
+    background: #eee;
+    border: 2px solid #eee;
+    border-radius: 10px;
+    font-size: .875rem;
+    outline: none;
+    padding: 15px;
+    transition: 1s;
+    width: 100%;
+}

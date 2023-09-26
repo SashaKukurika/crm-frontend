@@ -11,7 +11,7 @@ import {Link} from "react-router-dom";
 const Header: FC = () => {
     // const navigate = useNavigate();
     return (
-        <div className={'Header'}>
+        <header className={'Header'}>
 
 
                 <Link to={'/orders'}>
@@ -25,17 +25,22 @@ const Header: FC = () => {
 
                 <div className={'Header_name'}>{'admin' || 'manager'}</div>
 
-                <button className={'Header_button'}>
-                    <FontAwesomeIcon className={'Header_button_img'} icon={faUserGear} style={{color: "#ffffff",}} />
-                </button>
+                <Link to={'/login'}>
+                    <button className={'Header_button'}>
+                        <FontAwesomeIcon className={'Header_button_img'} icon={faUserGear} style={{color: "#ffffff",}}/>
+                    </button>
+                </Link>
 
-                <button className={'LogOut_btn'}>
-                    <FontAwesomeIcon className={'LogOut_btn_img'} icon={faRightFromBracket} style={{color: "#ffffff",}} />
-                </button>
+                <Link to={'/login'}>
+                    <button className={'LogOut_btn'}>
+                        <FontAwesomeIcon className={'LogOut_btn_img'} icon={faRightFromBracket}
+                                         style={{color: "#ffffff",}}/>
+                    </button>
+                </Link>
 
             </div>
 
-        </div>
+        </header>
     );
 };
 
