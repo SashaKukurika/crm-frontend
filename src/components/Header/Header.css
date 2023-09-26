@@ -52,6 +52,7 @@ img {
     cursor: pointer;
     font-size: 1.5rem;
     font-weight: 700;
+    text-decoration: none;
 }
 
 .Header_content {

@@ -1,19 +1,17 @@
-import {useState} from "react";
-import {PageEnum} from "./constants/page.enum";
-import {UserPage} from "./pages/UserPage";
+import {Navigate, Route, Routes} from "react-router-dom";
+import {MainLayout} from "./layouts/MainLayout";
 import {LoginPage} from "./pages/LoginPage";
 import {OrderPage} from "./pages/OrderPage";
-import {Header} from "./components/Header/Header";
-import {Routes} from "react-router-dom";
 
 const App = () => {
-    const [choice, setChoice] = useState<PageEnum>(PageEnum.LOGIN);
     return (
         <Routes>
-            <Header setChoice={setChoice}/>
-            {choice === PageEnum.LOGIN && <LoginPage/>}
-            {choice === PageEnum.ORDERS && <OrderPage/>}
-            {choice === PageEnum.USERS && <UserPage/>}
+           <Route path={'/'} element={<MainLayout/>}>
+               <Route index element={<Navigate to={'/login'}/>}/>
+               {/*// path це що пишеться в урлі і при виклику link to там прописуємо одну з наших path і при кліку на лінк будемо переходити до element*/}
+               <Route path={'/login'} element={<LoginPage/>}/>
+               <Route path={'/orders'} element={<OrderPage/>}/>
+           </Route>
         </Routes>
     );
 };

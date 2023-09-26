@@ -1,11 +1,13 @@
 import {FC} from "react";
 import {IOrder} from "../../interfaces/order.interface";
+// import {useNavigate} from "react-router-dom";
 
 interface IProps {
     order: IOrder;
 }
 
 const Order: FC<IProps> = ({order}) => {
+    // const navigate = useNavigate();
     const {
         id, age, course, course_format, course_type, msg, email, name, sum, utm,
         phone, status, surname, created_at, alreadyPaid

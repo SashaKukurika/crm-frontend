@@ -2,28 +2,34 @@ import {FC} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserGear, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import './Header.css';
-import {IUseState} from "../../types/useState.type";
-import {PageEnum} from "../../constants/page.enum";
+import {Link} from "react-router-dom";
 
-interface IProps {
-    setChoice: IUseState<PageEnum>
-}
+// interface IProps {
+//     setChoice: IUseState<PageEnum>
+// }
 
-const Header: FC<IProps> = ({setChoice}) => {
+const Header: FC = () => {
+    // const navigate = useNavigate();
     return (
         <div className={'Header'}>
 
-            <div onClick={()=> setChoice(PageEnum.ORDERS)} className={'Header_logo'}>Logo</div>
+
+                <Link to={'/orders'}>
+                    <div className={'Header_logo'}>
+                    Logo
+                    </div>
+                </Link>
+
 
             <div className={'Header_content'}>
 
                 <div className={'Header_name'}>{'admin' || 'manager'}</div>
 
-                <button onClick={()=> setChoice(PageEnum.USERS)} className={'Header_button'}>
+                <button className={'Header_button'}>
                     <FontAwesomeIcon className={'Header_button_img'} icon={faUserGear} style={{color: "#ffffff",}} />
                 </button>
 
-                <button onClick={()=> setChoice(PageEnum.LOGIN)} className={'LogOut_btn'}>
+                <button className={'LogOut_btn'}>
                     <FontAwesomeIcon className={'LogOut_btn_img'} icon={faRightFromBracket} style={{color: "#ffffff",}} />
                 </button>
 
