@@ -1,15 +1,12 @@
 import {FC} from 'react';
 import {Outlet} from "react-router-dom";
 
-interface IProps {
 
-}
-
-const MainLayout: FC<IProps> = () => {
+const MainLayout: FC = () => {
     return (
-        <div>
+        <>
             <Outlet/>
-        </div>
+        </>
     );
 };
 

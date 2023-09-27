@@ -57,3 +57,38 @@ option {
     transition: 1s;
     width: 100%;
 }
+
+.Filter_orders_checkbox_button {
+    gap: 10px;
+    margin: 0 auto;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+label {
+    cursor: default;
+}
+
+.Filter_orders label {
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.Filter_orders_checkbox {
+    height: 1.25rem;
+    width: 1.25rem;
+}
+
+.Filter_orders_button {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+}
+
+.Filter_orders_button_img {
+    width: 1.625rem;
+}

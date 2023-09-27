@@ -4,6 +4,12 @@ import {FC} from "react";
 import {joiResolver} from "@hookform/resolvers/joi";
 import {orderValidator} from "../../validators/order.validator";
 import './OrderForm.css'
+import {CoursesEnum} from "../../enums/courses.enum";
+import {CourseFormatEnum} from "../../enums/course-format.enum";
+import {CourseTypeEnum} from "../../enums/course-type.enum";
+import {StatusEnum} from "../../enums/status.enum";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faRotateRight} from "@fortawesome/free-solid-svg-icons";
 
 interface IProps {
     setUpdateOrdersSearch: (value: IOrder) => void
@@ -25,45 +31,39 @@ const OrderForm: FC<IProps> = ({setUpdateOrdersSearch}) => {
 
                 <div className={'Filter_orders_input'}>
                     <div className={'Form_input'}>
-                        <input className={'Form_input_input'} type="text" placeholder={'name'} {...register('name')}/>
+                        <input className={'Form_input_input'} type="text" placeholder={'Name'} {...register('name')}/>
                     </div>
                 </div>
 
                 <div className={'Filter_orders_input'}>
                     <div className={'Form_input'}>
                         <input className={'Form_input_input'} type="text"
-                               placeholder={'surname'} {...register('surname')}/>
+                               placeholder={'Surname'} {...register('surname')}/>
                     </div>
                 </div>
 
                 <div className={'Filter_orders_input'}>
                     <div className={'Form_input'}>
-                        <input className={'Form_input_input'} type="text" placeholder={'email'} {...register('email')}/>
+                        <input className={'Form_input_input'} type="text" placeholder={'Email'} {...register('email')}/>
                     </div>
                 </div>
 
                 <div className={'Filter_orders_input'}>
                     <div className={'Form_input'}>
-                        <input className={'Form_input_input'} type="text" placeholder={'phone'} {...register('phone')}/>
+                        <input className={'Form_input_input'} type="text" placeholder={'Phone'} {...register('phone')}/>
                     </div>
                 </div>
 
                 <div className={'Filter_orders_input'}>
                     <div className={'Form_input'}>
-                        <input className={'Form_input_input'} type="number" placeholder={'age'} {...register('age')}/>
+                        <input className={'Form_input_input'} type="number" placeholder={'Age'} {...register('age')}/>
                     </div>
                 </div>
 
                 <div className={'Filter_orders_input'}>
                     <div className={'Form_select'}>
                         <select className={'Form_select_select'} placeholder={'course'} {...register('course')}>
-                            <option>all courses</option>
-                            <option value={'FS'}>FS</option>
-                            <option value={'QACX'}>QACX</option>
-                            <option value={'JCX'}>JCX</option>
-                            <option value={"JSCX"}>JSCX</option>
-                            <option value={"FE"}>FE</option>
-                            <option value={"PCX"}>PCX</option>
+                            {Object.values(CoursesEnum).map((value) => <option>{value}</option>)}
                         </select>
                     </div>
                 </div>
@@ -72,9 +72,7 @@ const OrderForm: FC<IProps> = ({setUpdateOrdersSearch}) => {
                 <div className={'Form_select'}>
                     <select className={'Form_select_select'}
                             placeholder={'course_format'} {...register('course_format')}>
-                        <option>all formats</option>
-                        <option value={'static'}>static</option>
-                        <option value={'online'}>online</option>
+                        {Object.values(CourseFormatEnum).map((value) => <option>{value}</option>)}
                     </select>
                 </div>
             </div>
@@ -82,44 +80,48 @@ const OrderForm: FC<IProps> = ({setUpdateOrdersSearch}) => {
             <div className={'Filter_orders_input'}>
                 <div className={'Form_select'}>
                     <select className={'Form_select_select'} placeholder={'course_type'} {...register('course_type')}>
-                        <option>all types</option>
-                        <option value={'pro'}>pro</option>
-                        <option value={'minimal'}>minimal</option>
-                        <option value={'premium'}>premium</option>
-                        <option value={'incudator'}>incudator</option>
-                        <option value={'vip'}>vip</option>
+                        {Object.values(CourseTypeEnum).map((value) => <option>{value}</option>)}
                     </select>
                 </div>
             </div>
-            {/*todo add group from api*/}
-            {/*<div className={'Filter_orders_input'}>*/}
-            {/*    <div className={'Form_select'}>*/}
-            {/*        <select className={'Form_select_select'} placeholder={'group'} {...register('group')}>*/}
-            {/*            <option>all statuses</option>*/}
-            {/*            <option value={'In work'}>In work</option>*/}
-            {/*            <option value={'New'}>New</option>*/}
-            {/*            <option value={'Agree'}>Agree</option>*/}
-            {/*            <option value={'Disagree'}>Disagree</option>*/}
-            {/*            <option value={'Dubbing'}>Dubbing</option>*/}
-            {/*        </select>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
-            {/*todo add date*/}
-            {/*<div className={'Filter_orders_input'}>*/}
-            {/*    <div className={'Form_input'}>*/}
-            {/*        <input className={'Form_input_input'} type="text" placeholder={'start_date'} {...register('start_date')}/>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
 
-            {/*<div className={'Filter_orders_input'}>*/}
-            {/*    <div className={'Form_input'}>*/}
-            {/*        <input className={'Form_input_input'} type="text" placeholder={'end_date'} {...register('end_date')}/>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
+            {/*todo add group from api*/}
+            <div className={'Filter_orders_input'}>
+                <div className={'Form_select'}>
+                    <select className={'Form_select_select'} placeholder={'status'} {...register('status')}>
+                        {Object.values(StatusEnum).map((value) => <option>{value}</option>)}
+                    </select>
+                </div>
             </div>
-            {/*// /!*<button>submit</button>*!/*/}
+
+            {/*todo add date*/}
+            <div className={'Filter_orders_input'}>
+                <div className={'Form_input'}>
+                    <input className={'Form_input_input'} type="date" placeholder={'start_date'} {...register('created_at')}/>
+                </div>
+            </div>
+
+            <div className={'Filter_orders_input'}>
+                <div className={'Form_input'}>
+                    <input className={'Form_input_input'} type="date" placeholder={'end_date'} {...register('created_at')}/>
+                </div>
+            </div>
+            </div>
+
             {/*todo add Filter_orders_checkbox_button*/}
+            <div className={'Filter_orders_checkbox_button'}>
+                <label>
+                    {/*todo change register for manager*/}
+                    <input className={'Filter_orders_checkbox'} type="checkbox" {...register('name')}/>
+                    My
+                </label>
+                <button className={'Filter_orders_button'} type={'reset'}>
+                    <FontAwesomeIcon className={'Filter_orders_button_img'} icon={faRotateRight} style={{color: "#ffffff",}} />
+                </button>
+            </div>
         </form>
+
+
         // {/*<div>*/}
         // {/*    {errors.age && <div>{errors.age.message}</div>}*/}
         // {/*</div>*/}
