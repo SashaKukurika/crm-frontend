@@ -1,9 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 
-import { MainLayout } from './layouts/MainLayout';
-import { LoginPage } from './pages/LoginPage';
-import { OrdersPage } from './pages/OrdersPage/OrdersPage';
-import { Page404 } from './pages/Page404/Page404';
+import { MainLayout } from './layouts';
+import { LoginPage, OrdersPage, Page404 } from './pages';
 
 const App = () => {
   return (

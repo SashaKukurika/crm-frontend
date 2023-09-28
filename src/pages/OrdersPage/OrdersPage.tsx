@@ -1,7 +1,6 @@
 import { FC } from 'react';
 
-import { Header } from '../../components/Header/Header';
-import { Orders } from '../../components/Orders/Orders';
+import { Header, Orders } from '../../components';
 
 import './OrdersPage.css';
 
