@@ -1,15 +1,7 @@
 import { FC } from 'react';
 
-interface IProps {
-
-}
-
-const UserPage: FC<IProps> = () => {
- return (
-  <div>
-   UserPage
-  </div>
- );
+const UserPage: FC = () => {
+  return <div>UserPage</div>;
 };
 
-export {UserPage};
+export { UserPage };

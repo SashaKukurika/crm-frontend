@@ -1,39 +1,39 @@
 export interface IOrderWithPagination {
-    data: IOrder[];
-    page: number;
-    totalPage: number;
-    halfOfPages: number;
-    totalOrders: number;
+  data: IOrder[];
+  page: number;
+  totalPage: number;
+  halfOfPages: number;
+  totalOrders: number;
 }
 
 export interface IOrder {
-    id: number;
+  id: number;
 
-    name: string;
+  name: string;
 
-    surname: string;
+  surname: string;
 
-    email: string;
+  email: string;
 
-    phone: string;
+  phone: string;
 
-    age: number;
+  age: number;
 
-    course: string;
+  course: string;
 
-    course_format: string;
+  course_format: string;
 
-    course_type: string;
+  course_type: string;
 
-    sum: number;
+  sum: number;
 
-    alreadyPaid: number;
+  alreadyPaid: number;
 
-    created_at: Date;
+  created_at: Date;
 
-    utm: string;
+  utm: string;
 
-    msg: string;
+  msg: string;
 
-    status: string;
+  status: string;
 }

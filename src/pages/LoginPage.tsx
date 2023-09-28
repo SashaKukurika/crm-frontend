@@ -1,15 +1,7 @@
 import { FC } from 'react';
 
-interface IProps {
-
-}
-
-const LoginPage: FC<IProps> = () => {
- return (
-  <div>
-   LoginPage
-  </div>
- );
+const LoginPage: FC = () => {
+  return <div>LoginPage</div>;
 };
 
-export {LoginPage};
+export { LoginPage };

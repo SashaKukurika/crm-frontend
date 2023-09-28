@@ -1,62 +1,62 @@
 button {
-    background: #43a047;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    outline: 0;
-    text-transform: uppercase;
-    transition: all .3s ease;
+  background: #43a047;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  outline: 0;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
 }
 
 img {
-    overflow-clip-margin: content-box;
-    overflow: clip;
+  overflow-clip-margin: content-box;
+  overflow: clip;
 }
 
 .Header_button {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    padding: 10px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
 }
 
 .LogOut_btn {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    padding: 10px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
 }
 
 .LogOut_btn_img {
-    width: 1.875rem;
+  width: 1.875rem;
 }
 
 .Header_button_img {
-    width: 1.875rem;
+  width: 1.875rem;
 }
 
 .Header {
-    align-items: center;
-    background-color: #76b852;
-    color: #fff;
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
+  align-items: center;
+  background-color: #76b852;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
 }
 
 .Header_logo {
-    cursor: pointer;
-    font-size: 1.5rem;
-    font-weight: 700;
-    text-decoration: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-decoration: none;
 }
 
 .Header_content {
-    align-items: center;
-    display: flex;
-    gap: 10px;
+  align-items: center;
+  display: flex;
+  gap: 10px;
 }
 
 .Header_name {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 }

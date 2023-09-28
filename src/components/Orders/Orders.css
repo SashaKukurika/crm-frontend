@@ -1,17 +1,17 @@
 .Orders_page_management {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    padding-right: 10px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding-right: 10px;
 }
 
 .Excel_btn {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    padding: 5px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 5px;
 }
 
 .Exel_btn_img {
-    width: 1.625rem;
+  width: 1.625rem;
 }
