@@ -8,23 +8,16 @@ import { ordersActions } from '../../redux';
 import { orderService } from '../../services';
 import { Order } from '../Order';
 import { OrderForm } from '../OrderForm';
-
 import './Orders.css';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 
 const Orders = () => {
-  // const [orders, setOrders] = useState<IOrder[]>([]);
-  const [updateOrdersSearch, setUpdateOrdersSearch] = useState<IOrder | null>(null);
-  const { orders } = useSelector((state) => state.orders);
-  const dispatch = useDispatch();
+  const {orders} = useAppSelector(state => state.ordersReducer);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(ordersActions.getAllWithPagination());
-    // todo put in getAllWithPagination the updateOrdersSearch
-    // orderService
-    //   .getAllWithPagination()
-    //   .then((value) => value.data)
-    //   .then((value) => setOrders(value.data));
-  }, [dispatch, updateOrdersSearch]);
+        dispatch(ordersActions.getAllWithPagination())
+  }, [dispatch]);
   return (
     <>
       <div className={'Orders_page_management'}>

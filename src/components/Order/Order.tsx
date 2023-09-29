@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { IOrder } from '../../interfaces/order.interface';
+import { IOrder } from '../../interfaces';
 
 interface IProps {
   order: IOrder;

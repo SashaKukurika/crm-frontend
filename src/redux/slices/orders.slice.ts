@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue } from '@reduxjs/toolkit';
 
 import { orderService } from '../../services';
-import { IError, IOrder } from '../../interfaces';
+import { IError, IOrder, IOrderWithPagination } from '../../interfaces';
+import { AxiosError } from 'axios';
 
 interface IState {
-  orders: IOrder[],
+  orders: IOrderWithPagination,
   orderForUpdate: IOrder,
   trigger: boolean,
   loading: boolean,
@@ -12,7 +13,7 @@ interface IState {
 }
 
 const initialState: IState = {
-  orders: [],
+  orders: null,
   errors: null,
   orderForUpdate: null,
   trigger: false,
@@ -20,19 +21,20 @@ const initialState: IState = {
 
 }
 
-const getAllWithPagination = createAsyncThunk(
+const getAllWithPagination = createAsyncThunk<IOrderWithPagination, void>(
   'ordersSlice/getAllWithPagination',
-  async (arg, thunkAPI) => {
+  async (_, {rejectWithValue}) => {
     try {
       const { data } = await orderService.getAllWithPagination();
       return data;
     } catch (e) {
-      return thunkAPI.rejectWithValue('e.response.data');
+      const err = e as AxiosError
+      return rejectWithValue(err.response.data)
     }
   },
 );
 
-const update = createAsyncThunk('ordersSlice/update', async ({ id, order }, thunkAPI) => {
+const update = createAsyncThunk<IOrder>('ordersSlice/update', async ({id, }, thunkAPI) => {
   try {
     await orderService.updateById(id, order);
   } catch (e) {
@@ -71,14 +73,14 @@ const slice = createSlice({
       // })
       .addMatcher(isPending(), (state) => {
         state.loading = true;
-        state.error = null;
+        state.errors = null;
       })
       .addMatcher(isFulfilled(), (state) => {
         state.loading = false;
-        state.error = null;
+        state.errors = null;
       })
       .addMatcher(isRejectedWithValue(), (state, action) => {
-        state.error = action.payload;
+        state.errors = action.payload;
         state.loading = false;
       })
       .addMatcher(isFulfilled(update), (state) => {
