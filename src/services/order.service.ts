@@ -1,16 +1,16 @@
-import { urls } from '../constants/urls';
-import { IOrder, IOrderWithPagination } from '../interfaces/order.interface';
-import { IRes } from '../types/res.type';
+import { urls } from '../constants';
+import { IOrder, IOrderWithPagination } from '../interfaces';
+import { IRes } from '../types';
 
 import { axiosService } from './axios.service';
 
 const orderService = {
-  getAllWithPagination: (): IRes<IOrderWithPagination> => axiosService.get(urls.orders),
+  getAllWithPagination: (): IRes<IOrderWithPagination> => axiosService.get(urls.orders.orders),
   // todo add type for return statistics
-  getOrdersStatistics: () => axiosService.get(urls.ordersStatistics),
-  getById: (id: number) => axiosService.get(`${urls.orders}/${id}`),
+  getOrdersStatistics: () => axiosService.get(urls.orders.getStatistics),
+  getById: (id: number) => axiosService.get(urls.orders.getById(id)),
   updateById: (id: number, order: IOrder): IRes<IOrder> =>
-    axiosService.patch(`${urls.orders}/${id}`, order),
+    axiosService.patch(urls.orders.getById(id), order),
 };
 
 export { orderService };

@@ -1,13 +1,24 @@
 const baseURL = 'http://localhost:5000';
 
+const orders = '/orders';
+const users = '/users';
+const auth = '/auth';
+
 const urls = {
-  orders: '/orders',
-  orderById: (id: number): string => `/orders/${id}`,
-  ordersStatistics: '/orders/statistics',
-  users: '/users',
-  auth: '/auth',
-  login: '/auth/login',
-  refreshToken: '/auth/refresh-token',
+  orders: {
+    orders,
+    getById: (id: number): string => `${orders}/${id}`,
+    getStatistics: `${orders}/statistics`,
+  },
+
+  users: {
+    users,
+  },
+  auth: {
+    auth,
+    login: `${auth}/login`,
+    refreshToken: `${auth}/refresh-token`,
+  },
 };
 
 export { baseURL, urls };
