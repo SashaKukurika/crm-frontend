@@ -1,11 +1,7 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import { faFileExcel } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { IOrder } from '../../interfaces';
 import { ordersActions } from '../../redux';
-import { orderService } from '../../services';
 import { Order } from '../Order';
 import { OrderForm } from '../OrderForm';
 import './Orders.css';

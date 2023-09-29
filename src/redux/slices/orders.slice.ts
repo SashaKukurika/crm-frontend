@@ -61,7 +61,7 @@ const slice = createSlice({
         state.orders = action.payload;
         state.loading = false;
       })
-      .addCase(update.fulfilled, (state, action) => {
+      .addCase(update.fulfilled, (state) => {
         state.orderForUpdate = null;
       })
       // .addCase(getAllWithPagination.pending, (state) => {
