@@ -1,94 +1,51 @@
-option {
-  font-weight: normal;
-  display: block;
-  /*white-space-collapse: collapse;*/
-  /*text-wrap: nowrap;*/
-  min-height: 1.2em;
-  padding: 2px 1px;
-}
-
 .Filter_orders {
-  display: flex;
-  padding: 5px;
+    display: flex;
+    padding: 5px;
 }
 
 .Filter_orders_inputs {
-  display: flex;
-  flex-wrap: wrap;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .Filter_orders_input {
-  margin: 0 auto;
-  padding: 3px 5px;
-  width: 16.66%;
+    margin: 0 auto;
+    padding: 3px 5px;
+    width: calc(16.66%);
 }
 
-.Form_input {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-}
-
-.Form_input_input {
-  background: #eee;
-  border: 2px solid #eee;
-  border-radius: 10px;
-  font-size: 0.875rem;
-  outline: none;
-  padding: 15px;
-  transition: 1s;
-}
-
-.Form_select {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-}
-
-.Form_select_select {
-  background: #eee;
-  border: 2px solid #eee;
-  border-radius: 10px;
-  font-size: 0.875rem;
-  outline: none;
-  padding: 15px;
-  transition: 1s;
-  width: 100%;
-}
-
-.Filter_orders_checkbox_button {
-  gap: 10px;
-  margin: 0 auto;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-}
-
-label {
-  cursor: default;
-}
 
 .Filter_orders label {
-  text-align: center;
-  align-items: center;
-  display: flex;
-  justify-content: center;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
 }
 
 .Filter_orders_checkbox {
-  height: 1.25rem;
-  width: 1.25rem;
+    height: 1.25rem;
+    width: 1.25rem;
+}
+
+.Filter_orders_checkbox:checked {
+    accent-color: #43A047;
+}
+
+.Filter_orders_checkbox_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    gap: 10px;
 }
 
 .Filter_orders_button {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  padding: 5px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 5px;
 }
 
 .Filter_orders_button_img {
-  width: 1.625rem;
+    width: 1.625rem;
 }

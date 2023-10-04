@@ -7,3 +7,5 @@ export * from './Spinner';
 export * from './Pagination';
 export * from './Footer';
 export * from './LogOut';
+export * from './FormInput';
+export * from './FormSelect';

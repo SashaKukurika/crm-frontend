@@ -1,146 +1,110 @@
 import { FC } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { faRotateRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { joiResolver } from '@hookform/resolvers/joi';
 
-import { CourseFormatEnum, CoursesEnum, CourseTypeEnum, StatusEnum } from '../../enums';
+import { CourseFormatEnum, CoursesEnum, CourseStatusEnum, CourseTypeEnum } from '../../enums';
 import { IOrder } from '../../interfaces';
 import { orderValidator } from '../../validators';
+import { FormInput } from '../FormInput';
+import { FormSelect } from '../FormSelect';
 
 import './OrderForm.css';
 
-// interface IProps {
-//   setUpdateOrdersSearch: (value: IOrder) => void;
-// }
+interface IProps {
+  setParams: any;
+}
 
-const OrderForm: FC = () => {
-  const { register, handleSubmit } = useForm<IOrder>({
-    mode: 'onChange',
+const OrderForm: FC<IProps> = ({ setParams }) => {
+  const { register, reset } = useForm<IOrder>({
+    mode: 'all',
     resolver: joiResolver(orderValidator),
   });
+  // todo add group getting from backend
 
-  const search: SubmitHandler<IOrder> = async (orderSearch) => {
-    // await setUpdateOrdersSearch(orderSearch);
-    console.log(orderSearch);
+  // const search: SubmitHandler<IOrder> = async (orderSearch) => {
+  //   // await setUpdateOrdersSearch(orderSearch);
+  //   console.log(orderSearch);
+  // };
+
+  const resetForm = () => {
+    reset();
+    setParams({ target: { name: 'reset', value: 'reset' } });
   };
+
   return (
-    <form className={'Filter_orders'} onSubmit={handleSubmit(search)}>
+    <form className={'Filter_orders'} onChange={setParams}>
       <div className={'Filter_orders_inputs'}>
         <div className={'Filter_orders_input'}>
-          <div className={'Form_input'}>
-            <input
-              className={'Form_input_input'}
-              type="text"
-              placeholder={'Name'}
-              {...register('name')}
-            />
-          </div>
+          <FormInput type="text" label={'Name'} name={'name'} register={register} />
         </div>
 
         <div className={'Filter_orders_input'}>
-          <div className={'Form_input'}>
-            <input
-              className={'Form_input_input'}
-              type="text"
-              placeholder={'Surname'}
-              {...register('surname')}
-            />
-          </div>
+          <FormInput type={'text'} label={'Surname'} name={'surname'} register={register} />
         </div>
 
         <div className={'Filter_orders_input'}>
-          <div className={'Form_input'}>
-            <input
-              className={'Form_input_input'}
-              type="text"
-              placeholder={'Email'}
-              {...register('email')}
-            />
-          </div>
+          <FormInput type={'text'} label={'Email'} name={'email'} register={register} />
         </div>
 
         <div className={'Filter_orders_input'}>
-          <div className={'Form_input'}>
-            <input
-              className={'Form_input_input'}
-              type="text"
-              placeholder={'Phone'}
-              {...register('phone')}
-            />
-          </div>
+          <FormInput type={'text'} label={'Phone'} name={'phone'} register={register} />
         </div>
 
         <div className={'Filter_orders_input'}>
-          <div className={'Form_input'}>
-            <input
-              className={'Form_input_input'}
-              type="number"
-              placeholder={'Age'}
-              {...register('age')}
-            />
-          </div>
+          <FormInput type={'number'} label={'Age'} name={'age'} register={register} />
         </div>
 
         <div className={'Filter_orders_input'}>
-          <div className={'Form_select'}>
-            <select className={'Form_select_select'} placeholder={'course'} {...register('course')}>
-              {Object.values(CoursesEnum).map((value, index) => (
-                <option key={index}>{value}</option>
-              ))}
-            </select>
-          </div>
+          <FormSelect
+            label={'Course'}
+            name={'course'}
+            register={register}
+            options={Object.values(CoursesEnum)}
+            defaultLabel={'all courses'}
+          />
         </div>
 
         <div className={'Filter_orders_input'}>
-          <div className={'Form_select'}>
-            <select
-              className={'Form_select_select'}
-              placeholder={'course_format'}
-              {...register('course_format')}
-            >
-              {Object.values(CourseFormatEnum).map((value, index) => (
-                <option key={index}>{value}</option>
-              ))}
-            </select>
-          </div>
+          <FormSelect
+            label={'Course format'}
+            name={'course_format'}
+            register={register}
+            options={Object.values(CourseFormatEnum)}
+            defaultLabel={'all formats'}
+          />
         </div>
 
         <div className={'Filter_orders_input'}>
-          <div className={'Form_select'}>
-            <select
-              className={'Form_select_select'}
-              placeholder={'course_type'}
-              {...register('course_type')}
-            >
-              {Object.values(CourseTypeEnum).map((value, index) => (
-                <option key={index}>{value}</option>
-              ))}
-            </select>
-          </div>
+          <FormSelect
+            label={'Course type'}
+            name={'course_type'}
+            register={register}
+            options={Object.values(CourseTypeEnum)}
+            defaultLabel={'all types'}
+          />
         </div>
 
+        <div className={'Filter_orders_input'}>
+          <FormSelect
+            label={'Status'}
+            name={'status'}
+            register={register}
+            options={Object.values(CourseStatusEnum)}
+            defaultLabel={'all statuses'}
+          />
+        </div>
         {/* todo add group from api*/}
-        <div className={'Filter_orders_input'}>
-          <div className={'Form_select'}>
-            <select className={'Form_select_select'} placeholder={'status'} {...register('status')}>
-              {Object.values(StatusEnum).map((value, index) => (
-                <option key={index}>{value}</option>
-              ))}
-            </select>
-          </div>
-        </div>
-
         {/* todo add date*/}
         <div className={'Filter_orders_input'}>
-          <div className={'Form_input'}>
-            <input
-              className={'Form_input_input'}
-              type="date"
-              placeholder={'start_date'}
-              {...register('created_at')}
-            />
-          </div>
+          <FormInput
+            type="text"
+            label={'Start date'}
+            name={'start_date'}
+            register={register}
+            onFocus={(e: any) => (e.target.type = 'date')}
+          />
         </div>
 
         <div className={'Filter_orders_input'}>
@@ -162,7 +126,7 @@ const OrderForm: FC = () => {
           <input className={'Filter_orders_checkbox'} type={'checkbox'} {...register('name')} />
           My
         </label>
-        <button className={'Filter_orders_button'} type={'reset'}>
+        <button className={'Filter_orders_button'} type={'reset'} onClick={resetForm}>
           <FontAwesomeIcon
             className={'Filter_orders_button_img'}
             icon={faRotateRight}

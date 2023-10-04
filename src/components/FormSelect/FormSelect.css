@@ -1,0 +1,17 @@
+.Form_select {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.Form_select_select {
+    outline: none;
+    background: #eeeeee;
+    width: 100%;
+    border: 2px solid #eeeeee;
+    padding: 15px;
+    font-size: 0.875rem;
+    border-radius: 10px;
+    transition: 1s;
+}
