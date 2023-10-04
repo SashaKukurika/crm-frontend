@@ -20,17 +20,6 @@ img {
   padding: 10px;
 }
 
-.LogOut_btn {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  padding: 10px;
-}
-
-.LogOut_btn_img {
-  width: 1.875rem;
-}
-
 .Header_button_img {
   width: 1.875rem;
 }
@@ -59,4 +48,8 @@ img {
 
 .Header_name {
   font-size: 1.5rem;
+}
+
+.Header_button_hidden {
+  display: none;
 }

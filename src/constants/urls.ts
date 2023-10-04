@@ -9,6 +9,7 @@ const urls = {
     orders,
     getById: (id: number): string => `${orders}/${id}`,
     getStatistics: `${orders}/statistics`,
+    getExel: `${orders}/exel`,
   },
 
   users: {

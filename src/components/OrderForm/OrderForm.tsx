@@ -4,27 +4,24 @@ import { faRotateRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { joiResolver } from '@hookform/resolvers/joi';
 
-import { CourseFormatEnum } from '../../enums/course-format.enum';
-import { CourseTypeEnum } from '../../enums/course-type.enum';
-import { CoursesEnum } from '../../enums/courses.enum';
-import { StatusEnum } from '../../enums/status.enum';
-import { IOrder } from '../../interfaces/order.interface';
-import { orderValidator } from '../../validators/order.validator';
+import { CourseFormatEnum, CoursesEnum, CourseTypeEnum, StatusEnum } from '../../enums';
+import { IOrder } from '../../interfaces';
+import { orderValidator } from '../../validators';
 
 import './OrderForm.css';
 
-interface IProps {
-  setUpdateOrdersSearch: (value: IOrder) => void;
-}
+// interface IProps {
+//   setUpdateOrdersSearch: (value: IOrder) => void;
+// }
 
-const OrderForm: FC<IProps> = ({ setUpdateOrdersSearch }) => {
+const OrderForm: FC = () => {
   const { register, handleSubmit } = useForm<IOrder>({
     mode: 'onChange',
     resolver: joiResolver(orderValidator),
   });
 
   const search: SubmitHandler<IOrder> = async (orderSearch) => {
-    await setUpdateOrdersSearch(orderSearch);
+    // await setUpdateOrdersSearch(orderSearch);
     console.log(orderSearch);
   };
   return (
@@ -162,7 +159,7 @@ const OrderForm: FC<IProps> = ({ setUpdateOrdersSearch }) => {
       <div className={'Filter_orders_checkbox_button'}>
         <label>
           {/* todo change register for manager*/}
-          <input className={'Filter_orders_checkbox'} type="checkbox" {...register('name')} />
+          <input className={'Filter_orders_checkbox'} type={'checkbox'} {...register('name')} />
           My
         </label>
         <button className={'Filter_orders_button'} type={'reset'}>

@@ -1,0 +1,10 @@
+.Excel_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+}
+
+.Exel_btn_img {
+     width: 1.625rem;
+}

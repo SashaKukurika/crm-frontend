@@ -1,10 +1,11 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { faRightFromBracket, faUserGear } from '@fortawesome/free-solid-svg-icons';
+import { faUserGear } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import './Header.css';
+import { LogOut } from '../LogOut';
 
+import './Header.css';
 const Header: FC = () => {
   const navigate = useNavigate();
   return (
@@ -24,13 +25,7 @@ const Header: FC = () => {
           />
         </button>
 
-        <button onClick={() => navigate('/login')} className={'LogOut_btn'}>
-          <FontAwesomeIcon
-            className={'LogOut_btn_img'}
-            icon={faRightFromBracket}
-            style={{ color: '#ffffff' }}
-          />
-        </button>
+        <LogOut />
       </div>
     </header>
   );

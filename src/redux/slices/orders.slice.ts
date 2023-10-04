@@ -1,46 +1,73 @@
-import { createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue } from '@reduxjs/toolkit';
-
-import { orderService } from '../../services';
-import { IError, IOrder, IOrderWithPagination } from '../../interfaces';
+import {
+  createAsyncThunk,
+  createSlice,
+  isFulfilled,
+  isPending,
+  isRejectedWithValue,
+} from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 
+import { IError, IOrder, IOrdersStatistics, IOrderWithPagination } from '../../interfaces';
+import { orderService } from '../../services';
+
 interface IState {
-  orders: IOrderWithPagination,
-  orderForUpdate: IOrder,
-  trigger: boolean,
-  loading: boolean,
-  errors: IError,
+  ordersWithPagination: IOrderWithPagination;
+  ordersStatistic: IOrdersStatistics;
+  orderForUpdate: IOrder;
+  trigger: boolean;
+  loading: boolean;
+  errors: IError;
 }
 
 const initialState: IState = {
-  orders: null,
+  ordersWithPagination: null,
+  ordersStatistic: null,
   errors: null,
   orderForUpdate: null,
   trigger: false,
-  loading: true
+  loading: true,
+};
 
-}
-
-const getAllWithPagination = createAsyncThunk<IOrderWithPagination, void>(
+const getAllWithPagination = createAsyncThunk<IOrderWithPagination>(
   'ordersSlice/getAllWithPagination',
-  async (_, {rejectWithValue}) => {
+  async (_, { rejectWithValue }) => {
     try {
       const { data } = await orderService.getAllWithPagination();
+      console.log(data);
       return data;
     } catch (e) {
-      const err = e as AxiosError
-      return rejectWithValue(err.response.data)
+      const err = e as AxiosError;
+      return rejectWithValue(err.response.data);
     }
   },
 );
 
-const update = createAsyncThunk<IOrder>('ordersSlice/update', async ({id, }, thunkAPI) => {
-  try {
-    await orderService.updateById(id, order);
-  } catch (e) {
-    return thunkAPI.rejectWithValue('e.response.data');
-  }
-});
+// перше що повертаю, друге що передаю в функцію
+const update = createAsyncThunk<IOrder, { id: number; order: IOrder }>(
+  'ordersSlice/update',
+  async ({ id, order }, { rejectWithValue }) => {
+    try {
+      const { data } = await orderService.updateById(id, order);
+      return data;
+    } catch (e) {
+      const err = e as AxiosError;
+      return rejectWithValue(err.response.data);
+    }
+  },
+);
+
+const getOrdersStatistics = createAsyncThunk<IOrdersStatistics>(
+  'ordersSlice/getOrdersStatistics',
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await orderService.getOrdersStatistics();
+      return data;
+    } catch (e) {
+      const err = e as AxiosError;
+      return rejectWithValue(err.response.data);
+    }
+  },
+);
 
 const slice = createSlice({
   name: 'ordersSlice',
@@ -58,11 +85,18 @@ const slice = createSlice({
   extraReducers: (builder) =>
     builder
       .addCase(getAllWithPagination.fulfilled, (state, action) => {
-        state.orders = action.payload;
+        state.ordersWithPagination = action.payload;
+        console.log(state.ordersWithPagination, 'state');
+        console.log(action, 'action');
         state.loading = false;
       })
       .addCase(update.fulfilled, (state) => {
         state.orderForUpdate = null;
+      })
+      .addCase(getOrdersStatistics.fulfilled, (state, action) => {
+        state.ordersStatistic = action.payload;
+        console.log(state.ordersStatistic);
+        state.loading = false;
       })
       // .addCase(getAllWithPagination.pending, (state) => {
       //   state.loading = true;
@@ -90,6 +124,6 @@ const slice = createSlice({
 
 const { reducer: ordersReducer, actions } = slice;
 
-const ordersActions = { ...actions, getAllWithPagination, update };
+const ordersActions = { ...actions, getAllWithPagination, update, getOrdersStatistics };
 
 export { ordersReducer, ordersActions };

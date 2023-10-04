@@ -1,0 +1,10 @@
+.LogOut_btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.LogOut_btn_img {
+    width: 1.875rem;
+}

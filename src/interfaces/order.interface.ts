@@ -37,3 +37,12 @@ export interface IOrder {
 
   status: string;
 }
+
+export interface IOrdersStatistics {
+  total: number;
+  inWork: number;
+  agree: number;
+  disagree: number;
+  dubbing: number;
+  nullOrders: number;
+}
