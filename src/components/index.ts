@@ -9,3 +9,4 @@ export * from './Footer';
 export * from './LogOut';
 export * from './FormInput';
 export * from './FormSelect';
+export * from './SortOrders';

@@ -13,7 +13,7 @@ import { FormSelect } from '../FormSelect';
 import './OrderForm.css';
 
 interface IProps {
-  setParams: any;
+  setParams: (e: any) => void;
 }
 
 const OrderForm: FC<IProps> = ({ setParams }) => {
@@ -108,14 +108,15 @@ const OrderForm: FC<IProps> = ({ setParams }) => {
         </div>
 
         <div className={'Filter_orders_input'}>
-          <div className={'Form_input'}>
-            <input
-              className={'Form_input_input'}
-              type="date"
-              placeholder={'end_date'}
-              {...register('created_at')}
-            />
-          </div>
+          <FormInput
+            type="text"
+            label={'End date'}
+            name={'end_date'}
+            register={register}
+            onFocus={(e: any) => {
+              e.target.type = 'date';
+            }}
+          />
         </div>
       </div>
 
@@ -123,7 +124,17 @@ const OrderForm: FC<IProps> = ({ setParams }) => {
       <div className={'Filter_orders_checkbox_button'}>
         <label>
           {/* todo change register for manager*/}
-          <input className={'Filter_orders_checkbox'} type={'checkbox'} {...register('name')} />
+          <input
+            className={'Filter_orders_checkbox'}
+            name={'manager'}
+            type={'checkbox'}
+            value={''}
+            onClick={(e: any) =>
+              e.target.checked
+                ? (e.target.value = 'adminProfile.profile.name')
+                : (e.target.value = '')
+            }
+          />
           My
         </label>
         <button className={'Filter_orders_button'} type={'reset'} onClick={resetForm}>

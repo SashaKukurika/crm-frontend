@@ -1,17 +1,97 @@
-.Orders_page_management {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  padding-right: 10px;
+.Orders_table {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    display: table;
+    width:100%;
 }
 
-.Excel_btn {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  padding: 5px;
+.Orders_table_row {
+    display: table-row;
+    background: #f6f6f6;
+    position: relative;
 }
 
-.Exel_btn_img {
-  width: 1.625rem;
+.Orders_table_row_active {
+    height: 17.1875rem;
+}
+
+.Orders_table_row:nth-of-type(odd) {
+    background: #e9e9e9;
+}
+
+.Orders_table_row_hover:hover {
+    background: #43A047;
+    color: #FFFFFF;
+}
+
+.Orders_table_row.Orders_table_header {
+    font-weight: 700;
+    color: #ffffff;
+    background: #76b852;
+}
+
+.Orders_table_cell {
+    padding: 5px;
+    display: table-cell;
+    cursor: pointer;
+}
+
+.Orders_table_details {
+    display: none;
+}
+
+.Orders_table_details_visible {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    padding: 0 20px;
+}
+
+.Orders_table_details_left {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.Orders_table_details_right {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    color: black;
+}
+
+.Orders_table_content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    margin: 0 20px;
+}
+
+.Orders_table_comments {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 2px;
+    cursor: pointer;
+    background-color: #ffffff;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+.Orders_table_button {
+    padding: 10px;
+    width: 10%;
+}
+
+.Orders_table_button_disabled {
+    cursor: not-allowed;
+    background-color: #C0C0C0FF;
+}
+
+.Orders_table_button_disabled:hover {
+    background-color: #C0C0C0FF;
 }

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { ChangeEvent, FC } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import {
@@ -17,9 +17,8 @@ const OrdersPage: FC = () => {
   const loading = false;
   const [query, setQuery] = useSearchParams({ page: '1' });
 
-  const setParams = (e: any) => {
+  const setParams = (e: ChangeEvent<HTMLInputElement>) => {
     // todo check what ig come adn from where
-    console.log(e);
     const text = e.target.value;
     const name = e.target.name;
 
@@ -31,9 +30,7 @@ const OrdersPage: FC = () => {
     } else if (name === 'reset' && text === 'reset') {
       setQuery({
         page: '1',
-        // todo change to my property
-        field: 'id',
-        fieldOrder: 'DESC',
+        order: '-id',
       });
     } else {
       setQuery((value) => {
@@ -42,6 +39,18 @@ const OrdersPage: FC = () => {
         return value;
       });
     }
+  };
+
+  const sortByField = (field: string) => {
+    setQuery((value) => {
+      if (value.get('order') === field) {
+        value.set('order', `-${field}`);
+      } else {
+        value.set('order', field);
+      }
+      value.set('page', '1');
+      return value;
+    });
   };
 
   return (
@@ -57,11 +66,11 @@ const OrdersPage: FC = () => {
         {loading ? (
           <Spinner />
         ) : (
-          <div>
-            <Orders />
+          <>
+            <Orders sortByField={sortByField} />
 
             <Pagination />
-          </div>
+          </>
         )}
       </div>
 
