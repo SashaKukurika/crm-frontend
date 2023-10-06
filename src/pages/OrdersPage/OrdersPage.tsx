@@ -1,4 +1,4 @@
-import { ChangeEvent, FC } from 'react';
+import { ChangeEvent, FC, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import {
@@ -10,12 +10,23 @@ import {
   Pagination,
   Spinner,
 } from '../../components';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { ordersActions } from '../../redux';
 
 import './OrdersPage.css';
 
 const OrdersPage: FC = () => {
   const loading = false;
   const [query, setQuery] = useSearchParams({ page: '1' });
+
+  console.log(query.get('name'));
+
+  const { ordersWithPagination } = useAppSelector((state) => state.ordersReducer);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(ordersActions.getAllWithPagination(query));
+  }, [dispatch, query]);
 
   const setParams = (e: ChangeEvent<HTMLInputElement>) => {
     // todo check what ig come adn from where
@@ -67,9 +78,13 @@ const OrdersPage: FC = () => {
           <Spinner />
         ) : (
           <>
-            <Orders sortByField={sortByField} />
+            <Orders ordersWithPagination={ordersWithPagination} sortByField={sortByField} />
 
-            <Pagination />
+            <Pagination
+              setQuery={setQuery}
+              query={query}
+              pageCount={ordersWithPagination && ordersWithPagination.pageCount}
+            />
           </>
         )}
       </div>

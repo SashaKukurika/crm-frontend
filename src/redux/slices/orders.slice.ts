@@ -28,12 +28,11 @@ const initialState: IState = {
   loading: true,
 };
 
-const getAllWithPagination = createAsyncThunk<IOrderWithPagination>(
+const getAllWithPagination = createAsyncThunk<IOrderWithPagination, URLSearchParams>(
   'ordersSlice/getAllWithPagination',
-  async (_, { rejectWithValue }) => {
+  async (params, { rejectWithValue }) => {
     try {
-      const { data } = await orderService.getAllWithPagination();
-      console.log(data);
+      const { data } = await orderService.getAllWithPagination(params);
       return data;
     } catch (e) {
       const err = e as AxiosError;

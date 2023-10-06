@@ -1,17 +1,17 @@
 .Orders_page {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-.Orders_page_management{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-right: 10px;
+.Orders_page_management {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 10px;
 }
 
-.Orders_page_content{
-  flex-grow: 1;
-  overflow-wrap: anywhere;
+.Orders_page_content {
+    flex-grow: 1;
+    overflow-wrap: anywhere;
 }

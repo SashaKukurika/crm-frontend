@@ -37,6 +37,7 @@ const OrderForm: FC<IProps> = ({ setParams }) => {
     <form className={'Filter_orders'} onChange={setParams}>
       <div className={'Filter_orders_inputs'}>
         <div className={'Filter_orders_input'}>
+          {/* todo send value from query*/}
           <FormInput type="text" label={'Name'} name={'name'} register={register} />
         </div>
 

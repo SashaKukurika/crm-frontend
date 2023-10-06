@@ -1,9 +1,6 @@
 export interface IOrderWithPagination {
-  data: IOrder[];
-  page: number;
-  totalPage: number;
-  halfOfPages: number;
-  totalOrders: number;
+  orders: IOrder[];
+  pageCount: number;
 }
 
 export interface IOrder {

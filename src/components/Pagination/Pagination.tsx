@@ -1,48 +1,42 @@
 import { FC } from 'react';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ReactPaginate from 'react-paginate';
+import { SetURLSearchParams } from 'react-router-dom';
 
 import './Pagination.css';
 
-const Pagination: FC = () => {
-  return (
-    <ul className={'Pagination'}>
-      <li className={'Pagination_item'}>
-        <FontAwesomeIcon
-          className={'Pagination_arrow'}
-          icon={faChevronLeft}
-          style={{ color: '#ffffff' }}
-        />
-      </li>
-      {/* {paginationRange.map((pageNumber, i) => {*/}
-      {/*  if (pageNumber === DOTS) {*/}
-      {/*    return (*/}
-      {/*      <li key={i} className="Pagination_item.dots">*/}
-      {/*        &#8230;*/}
-      {/*      </li>*/}
-      {/*    );*/}
-      {/*  }*/}
+interface IProps {
+  setQuery: SetURLSearchParams;
+  query: URLSearchParams;
+  pageCount: number;
+}
 
-      {/*  return (*/}
-      {/*    <li*/}
-      {/*      className={classnames('Pagination_item', {*/}
-      {/*        selected: pageNumber === currentPage,*/}
-      {/*      })}*/}
-      {/*      onClick={() => onPageChange(pageNumber)}*/}
-      {/*      key={i}*/}
-      {/*    >*/}
-      {/*      {pageNumber}*/}
-      {/*    </li>*/}
-      {/*  );*/}
-      {/* })}*/}
-      <li className={'Pagination_item'}>
-        <FontAwesomeIcon
-          className={'Pagination_arrow'}
-          icon={faChevronRight}
-          style={{ color: '#ffffff' }}
-        />
-      </li>
-    </ul>
+const Pagination: FC<IProps> = ({ setQuery, query, pageCount }) => {
+  const handlePageClick = (selectedPage: { selected: number }) => {
+    const page = 1 + selectedPage.selected;
+    setQuery((value) => {
+      value.set('page', page.toString());
+      return value;
+    });
+  };
+
+  return (
+    <ReactPaginate
+      pageCount={pageCount} // Загальна кількість сторінок
+      pageRangeDisplayed={7} // Кількість відображуваних сторінок
+      marginPagesDisplayed={1} // Кількість відображуваних сторінок на краях
+      previousLabel={'<'} // Текст кнопки "Попередня"
+      nextLabel={'>'} // Текст кнопки "Наступна"
+      breakLabel={'...'} // Текст для роздільників
+      onPageChange={handlePageClick} // Обробник подій при зміні сторінки
+      containerClassName={'Pagination'} // Клас контейнера
+      activeClassName={'Pagination_item_active'} // Клас активної сторінки
+      pageClassName={'Pagination_item'}
+      disabledClassName={'Pagination_item_disabled'}
+      breakClassName={'Pagination_item_dots Pagination_item'}
+      nextClassName={'Pagination_arrow Pagination_item'}
+      previousClassName={'Pagination_arrow Pagination_item'}
+      initialPage={+query.get('page') - 1}
+    />
   );
 };
 

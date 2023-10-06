@@ -5,7 +5,6 @@
 }
 
 .Pagination_item {
-    padding: 0 12px;
     height: 2rem;
     text-align: center;
     margin: auto 4px;
@@ -14,13 +13,19 @@
     display: flex;
     box-sizing: border-box;
     align-items: center;
+    justify-content: center;
     letter-spacing: 0.01071em;
     border-radius: 16px;
     line-height: 1.43;
     min-width: 2rem;
+    width: 2.5rem;
 }
 
-.Pagination_item.dots:hover {
+a {
+    width: 100%;
+}
+
+.Pagination_item_dots:hover {
     background-color: #76b852;
     cursor: default;
 }
@@ -30,11 +35,11 @@
     cursor: pointer;
 }
 
-.Pagination_item.selected {
+.Pagination_item_active {
     background-color: #388E3C
 }
 
-.Pagination_item.disabled {
+.Pagination_item_disabled {
     display: none;
 }
 
@@ -44,9 +49,10 @@
 }
 
 .Pagination_arrow:hover {
-    cursor: default;
+    cursor: pointer;
 }
 
 .Pagination_arrow {
-    width: 1.25rem
+    width: 2.5rem;
+    min-width: 2rem;
 }

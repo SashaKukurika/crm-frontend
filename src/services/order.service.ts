@@ -5,7 +5,8 @@ import { IRes } from '../types';
 import { axiosService } from './axios.service';
 
 const orderService = {
-  getAllWithPagination: (): IRes<IOrderWithPagination> => axiosService.get(urls.orders.orders),
+  getAllWithPagination: (params: any): IRes<IOrderWithPagination> =>
+    axiosService.get(urls.orders.orders, { params }),
 
   getOrdersStatistics: (): IRes<IOrdersStatistics> => axiosService.get(urls.orders.getStatistics),
 
