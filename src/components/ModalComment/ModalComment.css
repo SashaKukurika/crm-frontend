@@ -1,0 +1,29 @@
+.Modal_comment {
+    border-bottom: 1px solid #ccc;
+}
+
+.Modal_comment_content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.Modal_comment_text {
+    width: 80%;
+    margin-right: 20px;
+}
+
+.Modal_comment_addition_info {
+    display: flex;
+    gap: 10px;
+    width: 20%;
+}
+
+.Modal_comment_manager {
+    width: 50%;
+}
+
+.Modal_comment_date {
+    width: 50%;
+}

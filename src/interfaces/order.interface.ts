@@ -1,3 +1,5 @@
+import { IGroup } from './group.interface';
+
 export interface IOrderWithPagination {
   orders: IOrder[];
   pageCount: number;
@@ -33,6 +35,8 @@ export interface IOrder {
   msg: string;
 
   status: string;
+
+  group: IGroup;
 }
 
 export interface IOrdersStatistics {

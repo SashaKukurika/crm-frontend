@@ -1,0 +1,16 @@
+.Comment {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 5px;
+}
+
+.Comment:last-child {
+    border-bottom: none;
+}
+
+.Comment_addition_info {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}

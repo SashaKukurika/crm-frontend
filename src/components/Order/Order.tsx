@@ -1,6 +1,11 @@
 import { FC, useState } from 'react';
 
 import { IOrder } from '../../interfaces';
+import { ClientForm } from '../ClientForm';
+import { Comment } from '../Comment';
+import { CommentForm } from '../CommentForm';
+import { Modal } from '../Modal';
+import { ModalComments } from '../ModalComments';
 
 interface IProps {
   order: IOrder;
@@ -24,6 +29,7 @@ const Order: FC<IProps> = ({ order }) => {
     surname,
     created_at,
     alreadyPaid,
+    group,
   } = order;
 
   const [tableActive, setTableActive] = useState(false);
@@ -33,7 +39,7 @@ const Order: FC<IProps> = ({ order }) => {
   const [openModalComments, setOpenModalComments] = useState(false);
   // todo import manager
   // const isButtonDisabled = manager !== null && adminProfile?.profile.name !== manager?.name;
-
+  const isButtonDisabled = false;
   const formatDate = (date: Date) => {
     if (!date) {
       return 'null';
@@ -103,8 +109,7 @@ const Order: FC<IProps> = ({ order }) => {
       </div>
 
       <div className={'Orders_table_cell'} onClick={() => setTableActive(!tableActive)}>
-        {/* todo group*/}
-        {'group' ? 'group' : 'null'}
+        {group?.name ? group.name : 'null'}
       </div>
 
       <div className={'Orders_table_cell'} onClick={() => setTableActive(!tableActive)}>
@@ -114,7 +119,50 @@ const Order: FC<IProps> = ({ order }) => {
       <div className={'Orders_table_cell'} onClick={() => setTableActive(!tableActive)}>
         {/* todo add manager*/}
         {/* {manager ? manager : 'null'}*/}
-        null
+        manager
+      </div>
+
+      <div className={`Orders_table_details ${tableActive ? 'Orders_table_details_visible' : ''}`}>
+        <div className={'Orders_table_details_left'}>
+          <div>Message: {msg ? msg : 'null'}</div>
+          <div>UTM: {utm ? utm : 'null'}</div>
+        </div>
+
+        <div className={'Orders_table_details_right'}>
+          <div className={'Orders_table_content'}>
+            {['comments', 'string'].length > 0 && (
+              <div onClick={() => setOpenModalComments(true)} className={'Orders_table_comments'}>
+                {['comments', 'string'].slice(0, 3).map((item, index) => (
+                  <Comment key={index} item={item} formatDate={formatDate} />
+                ))}
+              </div>
+            )}
+
+            <CommentForm
+              id={id}
+              isButtonDisabled={isButtonDisabled}
+              adminProfile={'adminProfile'}
+            />
+          </div>
+
+          <button
+            onClick={() => setOpenModalForm(true)}
+            className={`Orders_table_button ${
+              isButtonDisabled ? 'Orders_table_button_disabled' : ''
+            }`}
+            disabled={isButtonDisabled}
+          >
+            Edit
+          </button>
+
+          <Modal closeModal={setOpenModalComments} openModal={openModalComments}>
+            <ModalComments comments={'comments'} setOpenModalComments={setOpenModalComments} />
+          </Modal>
+
+          <Modal closeModal={setOpenModalForm} openModal={openModalForm}>
+            <ClientForm order={order} setOpenModalForm={setOpenModalForm} />
+          </Modal>
+        </div>
       </div>
     </div>
   );

@@ -42,11 +42,25 @@ const getAllWithPagination = createAsyncThunk<IOrderWithPagination, URLSearchPar
 );
 
 // перше що повертаю, друге що передаю в функцію
-const update = createAsyncThunk<IOrder, { id: number; order: IOrder }>(
+const updateById = createAsyncThunk<IOrder, { id: number; order: IOrder }>(
   'ordersSlice/update',
   async ({ id, order }, { rejectWithValue }) => {
     try {
       const { data } = await orderService.updateById(id, order);
+      return data;
+    } catch (e) {
+      const err = e as AxiosError;
+      return rejectWithValue(err.response.data);
+    }
+  },
+);
+
+// перше що повертаю, друге що передаю в функцію
+const addComment = createAsyncThunk<any, { id: number; comment: any }>(
+  'ordersSlice/update',
+  async ({ id, comment }, { rejectWithValue }) => {
+    try {
+      const { data } = await orderService.addComment(id, comment);
       return data;
     } catch (e) {
       const err = e as AxiosError;
@@ -85,13 +99,23 @@ const slice = createSlice({
     builder
       .addCase(getAllWithPagination.fulfilled, (state, action) => {
         state.ordersWithPagination = action.payload;
-        console.log(state.ordersWithPagination, 'state');
-        console.log(action, 'action');
         state.loading = false;
       })
-      .addCase(update.fulfilled, (state) => {
+      .addCase(updateById.fulfilled, (state) => {
         state.orderForUpdate = null;
       })
+      // .addCase(addComment.fulfilled, (state, action) => {
+      //   state.ordersWithPagination.orders = state.ordersWithPagination.orders.map(
+      //     (order): IOrder => {
+      //       if (order.id === action.payload) {
+      //         return {
+      //           ...order,
+      //         };
+      //         return order;
+      //       }
+      //     },
+      //   );
+      // })
       .addCase(getOrdersStatistics.fulfilled, (state, action) => {
         state.ordersStatistic = action.payload;
         console.log(state.ordersStatistic);
@@ -116,13 +140,19 @@ const slice = createSlice({
         state.errors = action.payload;
         state.loading = false;
       })
-      .addMatcher(isFulfilled(update), (state) => {
+      .addMatcher(isFulfilled(updateById), (state) => {
         state.trigger = !state.trigger;
       }),
 });
 
 const { reducer: ordersReducer, actions } = slice;
 
-const ordersActions = { ...actions, getAllWithPagination, update, getOrdersStatistics };
+const ordersActions = {
+  ...actions,
+  getAllWithPagination,
+  updateById,
+  getOrdersStatistics,
+  addComment,
+};
 
 export { ordersReducer, ordersActions };

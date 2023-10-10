@@ -5,12 +5,15 @@ import { SetURLSearchParams } from 'react-router-dom';
 import './Pagination.css';
 
 interface IProps {
-  setQuery: SetURLSearchParams;
-  query: URLSearchParams;
+  setQuery?: SetURLSearchParams;
+  query?: URLSearchParams;
   pageCount: number;
+  // currentPage?: number;
+  pageSize?: number;
+  onPageChange?: (page: number) => void;
 }
 
-const Pagination: FC<IProps> = ({ setQuery, query, pageCount }) => {
+const Pagination: FC<IProps> = ({ setQuery, query, pageCount, pageSize }) => {
   const handlePageClick = (selectedPage: { selected: number }) => {
     const page = 1 + selectedPage.selected;
     setQuery((value) => {

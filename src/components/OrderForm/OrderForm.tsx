@@ -1,11 +1,13 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { faRotateRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { joiResolver } from '@hookform/resolvers/joi';
 
 import { CourseFormatEnum, CoursesEnum, CourseStatusEnum, CourseTypeEnum } from '../../enums';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { IOrder } from '../../interfaces';
+import { groupActions } from '../../redux';
 import { orderValidator } from '../../validators';
 import { FormInput } from '../FormInput';
 import { FormSelect } from '../FormSelect';
@@ -22,7 +24,12 @@ const OrderForm: FC<IProps> = ({ setParams }) => {
     resolver: joiResolver(orderValidator),
   });
   // todo add group getting from backend
+  const { groups } = useAppSelector((state) => state.groupReducer);
+  const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    dispatch(groupActions.getAll());
+  }, [dispatch]);
   // const search: SubmitHandler<IOrder> = async (orderSearch) => {
   //   // await setUpdateOrdersSearch(orderSearch);
   //   console.log(orderSearch);
@@ -97,7 +104,16 @@ const OrderForm: FC<IProps> = ({ setParams }) => {
           />
         </div>
         {/* todo add group from api*/}
-        {/* todo add date*/}
+        <div className={'Filter_orders_input'}>
+          <FormSelect
+            label={'Group'}
+            name={'group'}
+            register={register}
+            options={groups.map((group) => group)}
+            defaultLabel={'all groups'}
+          />
+        </div>
+
         <div className={'Filter_orders_input'}>
           <FormInput
             type="text"
@@ -147,10 +163,6 @@ const OrderForm: FC<IProps> = ({ setParams }) => {
         </button>
       </div>
     </form>
-
-    // {/*<div>*/}
-    // {/*    {errors.age && <div>{errors.age.message}</div>}*/}
-    // {/*</div>*/}
   );
 };
 

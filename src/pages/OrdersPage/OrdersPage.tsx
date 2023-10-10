@@ -19,8 +19,6 @@ const OrdersPage: FC = () => {
   const loading = false;
   const [query, setQuery] = useSearchParams({ page: '1' });
 
-  console.log(query.get('name'));
-
   const { ordersWithPagination } = useAppSelector((state) => state.ordersReducer);
   const dispatch = useAppDispatch();
 
@@ -29,7 +27,6 @@ const OrdersPage: FC = () => {
   }, [dispatch, query]);
 
   const setParams = (e: ChangeEvent<HTMLInputElement>) => {
-    // todo check what ig come adn from where
     const text = e.target.value;
     const name = e.target.name;
 

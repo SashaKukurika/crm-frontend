@@ -1,9 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-import { ordersReducer } from './slices';
+import { groupReducer, ordersReducer } from './slices';
 
 const rotReducers = combineReducers({
   ordersReducer,
+  groupReducer,
 });
 
 const setupStore = () =>

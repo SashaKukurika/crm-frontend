@@ -14,5 +14,6 @@ export interface IError {
   utm?: string;
   msg?: string;
   status?: string;
+  group?: string;
   // todo описати всі поля з IOrder
 }

@@ -1,0 +1,23 @@
+.Modal_comments {
+    background-color: #fff;
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.Modal_comments_controls {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+}
+
+.Modal_comments_button {
+    padding: 10px;
+}
