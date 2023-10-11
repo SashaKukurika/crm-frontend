@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { UseFormRegister } from 'react-hook-form';
-import { useSearchParams } from 'react-router-dom';
 
 import { IOrder } from '../../interfaces';
 import { IGroup } from '../../interfaces/group.interface';
@@ -13,16 +12,26 @@ interface IProps {
   name: keyof IOrder;
   options: string[] | IGroup[];
   defaultLabel: string;
+  id?: string;
+  value?: string;
 }
 
-const FormSelect: FC<IProps> = ({ register, name, options, defaultLabel, ...selectProps }) => {
-  const [query] = useSearchParams();
+const FormSelect: FC<IProps> = ({
+  id,
+  value,
+  register,
+  name,
+  options,
+  defaultLabel,
+  ...selectProps
+}) => {
   return (
     <div className="Form_select">
       <select
-        value={query.get(name) || ''}
+        value={value}
         className={'Form_select_select'}
         name={name}
+        id={id}
         {...register(name)}
         {...selectProps}
       >

@@ -1,8 +1,10 @@
 import { FC, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
+import { CourseFormatEnum, CoursesEnum, CourseStatusEnum, CourseTypeEnum } from '../../enums';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { IOrder } from '../../interfaces';
+import { groupActions } from '../../redux';
 import { ISetState } from '../../types';
 import { FormInput } from '../FormInput';
 import { FormSelect } from '../FormSelect';
@@ -51,46 +53,42 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
       status: 'manager' === null ? 'In work' : status,
       sum: sum,
       alreadyPaid: alreadyPaid,
-      // group: 'group' ? 'group.id' : '',
+      group: group ? group.name : '',
     },
     // resolver: yupResolver(clientValidator),
   });
 
   const dispatch = useAppDispatch();
 
-  const [groupInput, setGroupInput] = useState(true);
+  const [groupInput, setGroupInput] = useState(false);
 
-  const submit = async (data: any) => {
-    // if (groupInput) {
-    //   const { payload, error: errorRes } = await dispatch(groupsActions.createGroup(data.group));
-    //   if (errorRes) {
-    //     await new Promise((resolve) => setTimeout(resolve, 2000));
-    //     dispatch(groupsActions.clearError());
-    //   } else {
-    //     setGroupInput((prev) => !prev);
-    //     setValue('group', payload.id);
-    //   }
-    // } else {
-    //   const cleanedData = Object.fromEntries(
-    //     Object.entries(data).filter(([key, value]) => value !== ''),
-    //   );
-    //   dispatch(ordersActions.patchOrder({ id, data: cleanedData }));
-    // }
-    console.log(data);
+  const submit: SubmitHandler<IOrder> = async (data: any) => {
+    if (groupInput) {
+      const { payload } = await dispatch(groupActions.create({ name: data.group }));
+      setGroupInput((prev) => !prev);
+      setValue('group', data.group);
+    } else {
+      const cleanedData = Object.fromEntries(
+        Object.entries(data).filter(([key, value]) => value !== ''),
+      );
+      console.log(cleanedData);
+      // dispatch(ordersActions.patchOrder({ id, data: cleanedData }));
+    }
   };
 
-  const changeGroupInput = (e: any) => {
+  const changeGroupInput = () => {
     // e.preventDefault();
-    // setGroupInput(!groupInput);
-    // !groupInput ? setValue('group', '') : setValue('group', 'group' ? 'group.id' : '');
-    console.log(e);
+    setGroupInput(!groupInput);
+    !groupInput ? setValue('group', '') : setValue('group', group ? group.name : '');
   };
+  // todo add errors from form
   return (
     <form className={'Client_form'} onSubmit={handleSubmit(submit)}>
       <div className={'Client_form_inputs'}>
         {groupInput ? (
           <div className={'Client_form_item  Client_form_item_row'}>
             <FormInput
+              id={'group'}
               type={'text'}
               name={'group'}
               label={'Group'}
@@ -110,6 +108,7 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
         ) : (
           <div className={'Client_form_item'}>
             <FormSelect
+              id={'group'}
               name={'group'}
               label={'Group'}
               options={groups.map((group) => group)}
@@ -125,9 +124,10 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
 
         <div className={'Client_form_item'}>
           <FormSelect
+            id={'status'}
             name={'status'}
             label={'Status'}
-            options={['In work', 'New', 'Agree', 'Disagree', 'Dubbing']}
+            options={Object.values(CourseStatusEnum)}
             register={register}
             defaultLabel={'all statuses'}
           />
@@ -135,6 +135,7 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
 
         <div className={'Client_form_item'}>
           <FormInput
+            id={'name'}
             type={'text'}
             name={'name'}
             label={'Name'}
@@ -145,6 +146,7 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
 
         <div className={'Client_form_item'}>
           <FormInput
+            id={'sum'}
             type={'number'}
             name={'sum'}
             label={'Sum'}
@@ -154,11 +156,18 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
         </div>
 
         <div className={'Client_form_item'}>
-          <FormInput type={'text'} name={'surname'} label={'Surname'} register={register} />
+          <FormInput
+            id={'surname'}
+            type={'text'}
+            name={'surname'}
+            label={'Surname'}
+            register={register}
+          />
         </div>
 
         <div className={'Client_form_item'}>
           <FormInput
+            id={'alreadyPaid'}
             type={'number'}
             name={'alreadyPaid'}
             label={'Already paid'}
@@ -167,30 +176,44 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
         </div>
 
         <div className={'Client_form_item'}>
-          <FormInput type={'text'} name={'email'} label={'Email'} register={register} />
-        </div>
-
-        <div className={'Client_form_item'}>
-          <FormSelect
-            name={'course'}
-            label={'Course'}
+          <FormInput
+            id={'email'}
+            type={'text'}
+            name={'email'}
+            label={'Email'}
             register={register}
-            defaultLabel={'all courses'}
-            options={['FS', 'QACX', 'JCX', 'JSCX', 'FE', 'PCX']}
           />
         </div>
 
         <div className={'Client_form_item'}>
-          <FormInput type={'number'} name={'phone'} label={'Phone'} register={register} />
+          <FormSelect
+            id={'course'}
+            name={'course'}
+            label={'Course'}
+            register={register}
+            defaultLabel={'all courses'}
+            options={Object.values(CoursesEnum)}
+          />
+        </div>
+
+        <div className={'Client_form_item'}>
+          <FormInput
+            id={phone}
+            type={'number'}
+            name={'phone'}
+            label={'Phone'}
+            register={register}
+          />
         </div>
 
         <div className={'Client_form_item'}>
           <FormSelect
+            id={'course_format'}
             name={'course_format'}
             label={'Course format'}
             register={register}
+            options={Object.values(CourseFormatEnum)}
             defaultLabel={'all formats'}
-            options={['static', 'online']}
           />
         </div>
 
@@ -198,6 +221,7 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
           <FormInput
             type={'number'}
             name={'age'}
+            id={'age'}
             label={'Age'}
             register={register}
             // error={errors.age}
@@ -206,11 +230,12 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
 
         <div className={'Client_form_item'}>
           <FormSelect
+            id={'course_type'}
             name={'course_type'}
             label={'Course type'}
             register={register}
+            options={Object.values(CourseTypeEnum)}
             defaultLabel={'all types'}
-            options={['pro', 'minimal', 'premium', 'incubator', 'vip']}
           />
         </div>
       </div>

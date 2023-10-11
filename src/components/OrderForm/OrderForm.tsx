@@ -1,5 +1,6 @@
 import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSearchParams } from 'react-router-dom';
 import { faRotateRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -23,7 +24,8 @@ const OrderForm: FC<IProps> = ({ setParams }) => {
     mode: 'all',
     resolver: joiResolver(orderValidator),
   });
-  // todo add group getting from backend
+  const [query] = useSearchParams();
+
   const { groups } = useAppSelector((state) => state.groupReducer);
   const dispatch = useAppDispatch();
 
@@ -45,23 +47,53 @@ const OrderForm: FC<IProps> = ({ setParams }) => {
       <div className={'Filter_orders_inputs'}>
         <div className={'Filter_orders_input'}>
           {/* todo send value from query*/}
-          <FormInput type="text" label={'Name'} name={'name'} register={register} />
+          <FormInput
+            type="text"
+            label={'Name'}
+            name={'name'}
+            register={register}
+            value={query.get('name') || ''}
+          />
         </div>
 
         <div className={'Filter_orders_input'}>
-          <FormInput type={'text'} label={'Surname'} name={'surname'} register={register} />
+          <FormInput
+            type={'text'}
+            label={'Surname'}
+            name={'surname'}
+            register={register}
+            value={query.get('surname') || ''}
+          />
         </div>
 
         <div className={'Filter_orders_input'}>
-          <FormInput type={'text'} label={'Email'} name={'email'} register={register} />
+          <FormInput
+            type={'text'}
+            label={'Email'}
+            name={'email'}
+            register={register}
+            value={query.get('email') || ''}
+          />
         </div>
 
         <div className={'Filter_orders_input'}>
-          <FormInput type={'text'} label={'Phone'} name={'phone'} register={register} />
+          <FormInput
+            type={'text'}
+            label={'Phone'}
+            name={'phone'}
+            register={register}
+            value={query.get('phone') || ''}
+          />
         </div>
 
         <div className={'Filter_orders_input'}>
-          <FormInput type={'number'} label={'Age'} name={'age'} register={register} />
+          <FormInput
+            type={'number'}
+            label={'Age'}
+            name={'age'}
+            register={register}
+            value={query.get('age') || ''}
+          />
         </div>
 
         <div className={'Filter_orders_input'}>
@@ -71,6 +103,7 @@ const OrderForm: FC<IProps> = ({ setParams }) => {
             register={register}
             options={Object.values(CoursesEnum)}
             defaultLabel={'all courses'}
+            value={query.get('course') || ''}
           />
         </div>
 
@@ -81,6 +114,7 @@ const OrderForm: FC<IProps> = ({ setParams }) => {
             register={register}
             options={Object.values(CourseFormatEnum)}
             defaultLabel={'all formats'}
+            value={query.get('course_format') || ''}
           />
         </div>
 
@@ -91,6 +125,7 @@ const OrderForm: FC<IProps> = ({ setParams }) => {
             register={register}
             options={Object.values(CourseTypeEnum)}
             defaultLabel={'all types'}
+            value={query.get('course_type') || ''}
           />
         </div>
 
@@ -101,6 +136,7 @@ const OrderForm: FC<IProps> = ({ setParams }) => {
             register={register}
             options={Object.values(CourseStatusEnum)}
             defaultLabel={'all statuses'}
+            value={query.get('status') || ''}
           />
         </div>
         {/* todo add group from api*/}
@@ -111,6 +147,7 @@ const OrderForm: FC<IProps> = ({ setParams }) => {
             register={register}
             options={groups.map((group) => group)}
             defaultLabel={'all groups'}
+            value={query.get('group') || ''}
           />
         </div>
 
@@ -121,6 +158,7 @@ const OrderForm: FC<IProps> = ({ setParams }) => {
             name={'start_date'}
             register={register}
             onFocus={(e: any) => (e.target.type = 'date')}
+            value={query.get('start_date') || ''}
           />
         </div>
 
@@ -133,6 +171,7 @@ const OrderForm: FC<IProps> = ({ setParams }) => {
             onFocus={(e: any) => {
               e.target.type = 'date';
             }}
+            value={query.get('end_date') || ''}
           />
         </div>
       </div>

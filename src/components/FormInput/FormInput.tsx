@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { UseFormRegister } from 'react-hook-form';
-import { useSearchParams } from 'react-router-dom';
 
 import { IOrder } from '../../interfaces';
 
@@ -12,17 +11,19 @@ interface IProps {
   name: any;
   type: string;
   onFocus?: any;
+  id?: string;
+  value?: string;
 }
 
-const FormInput: FC<IProps> = ({ register, label, name, ...inputProps }) => {
-  const [query] = useSearchParams();
+const FormInput: FC<IProps> = ({ id, value, register, label, name, ...inputProps }) => {
   return (
     // todo take params from url and put to input
     <div className="Form_input">
       <input
         className={'Form_input_input'}
+        id={id}
         placeholder={label}
-        value={query.get(name) || ''}
+        value={value}
         {...register(name)}
         {...inputProps}
       />

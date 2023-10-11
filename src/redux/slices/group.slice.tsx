@@ -29,15 +29,31 @@ const initialState: IState = {
   error: null,
 };
 
-const getAll = createAsyncThunk<IGroup[]>('groupSlice/getAll', async (_, { rejectWithValue }) => {
-  try {
-    const { data } = await groupService.getAll();
-    return data;
-  } catch (e) {
-    const err = e as AxiosError;
-    return rejectWithValue(err.response.data);
-  }
-});
+const getAll = createAsyncThunk<IGroup[], void>(
+  'groupSlice/getAll',
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await groupService.getAll();
+      return data;
+    } catch (e) {
+      const err = e as AxiosError;
+      return rejectWithValue(err.response.data);
+    }
+  },
+);
+
+const create = createAsyncThunk<IGroup, { name: string }>(
+  'groupSlice/create',
+  async ({ name }, { rejectWithValue }) => {
+    try {
+      const { data } = await groupService.create(name);
+      return data;
+    } catch (e) {
+      const err = e as AxiosError;
+      return rejectWithValue(err.response.data);
+    }
+  },
+);
 
 const slice = createSlice({
   name: 'groupSlice',
@@ -47,6 +63,10 @@ const slice = createSlice({
     builder
       .addCase(getAll.fulfilled, (state, action) => {
         state.groups = action.payload;
+        state.loading = false;
+      })
+      .addCase(create.fulfilled, (state, action) => {
+        state.groups = [...state.groups, action.payload];
         state.loading = false;
       })
       .addMatcher(isPending(), (state) => {
@@ -68,6 +88,7 @@ const { reducer: groupReducer, actions } = slice;
 const groupActions = {
   ...actions,
   getAll,
+  create,
 };
 
 export { groupActions, groupReducer };

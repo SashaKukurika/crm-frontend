@@ -8,7 +8,6 @@ interface IProps {
 }
 
 const Comment: FC<IProps> = ({ item, formatDate }) => {
-  console.log(item);
   return (
     <div className={'Comment'}>
       <div className={'Comment_text'}>{'item.comment'}</div>

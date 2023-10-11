@@ -2,6 +2,8 @@ import React, { FC, ReactNode } from 'react';
 
 import { ISetState } from '../../types';
 
+import './Modal.css';
+
 interface IProps {
   openModal: boolean;
   closeModal: ISetState<boolean>;
