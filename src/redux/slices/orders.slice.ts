@@ -42,7 +42,7 @@ const getAllWithPagination = createAsyncThunk<IOrderWithPagination, URLSearchPar
 );
 
 // перше що повертаю, друге що передаю в функцію
-const updateById = createAsyncThunk<IOrder, { id: number; order: IOrder }>(
+const updateById = createAsyncThunk<IOrder, { id: number; order: Partial<IOrder> }>(
   'ordersSlice/update',
   async ({ id, order }, { rejectWithValue }) => {
     try {
@@ -90,19 +90,19 @@ const slice = createSlice({
       state.orderForUpdate = action.payload;
     },
   },
-  // extraReducers: {
-  //   [getAllWithPagination.fulfilled]: (state, action) => {
-  //     state.orders = action.payload;
-  //   },
-  // },
   extraReducers: (builder) =>
     builder
       .addCase(getAllWithPagination.fulfilled, (state, action) => {
         state.ordersWithPagination = action.payload;
         state.loading = false;
       })
-      .addCase(updateById.fulfilled, (state) => {
-        state.orderForUpdate = null;
+      .addCase(updateById.fulfilled, (state, action) => {
+        // state.ordersWithPagination.orders = action.payload;
+        const index = state.ordersWithPagination.orders.findIndex(
+          (order) => order.id === action.payload.id,
+        );
+        state.ordersWithPagination.orders[index] = action.payload;
+        state.loading = false;
       })
       // .addCase(addComment.fulfilled, (state, action) => {
       //   state.ordersWithPagination.orders = state.ordersWithPagination.orders.map(

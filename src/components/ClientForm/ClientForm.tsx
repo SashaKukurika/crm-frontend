@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { CourseFormatEnum, CoursesEnum, CourseStatusEnum, CourseTypeEnum } from '../../enums';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { IOrder } from '../../interfaces';
-import { groupActions } from '../../redux';
+import { groupActions, ordersActions } from '../../redux';
 import { ISetState } from '../../types';
 import { FormInput } from '../FormInput';
 import { FormSelect } from '../FormSelect';
@@ -30,6 +30,7 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
     sum,
     alreadyPaid,
     group,
+    // todo add manager for status: 'manager' === null ? 'In work' : status,
   } = order;
 
   const { groups } = useAppSelector((state) => state.groupReducer);
@@ -64,15 +65,14 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
 
   const submit: SubmitHandler<IOrder> = async (data: any) => {
     if (groupInput) {
-      const { payload } = await dispatch(groupActions.create({ name: data.group }));
+      await dispatch(groupActions.create({ name: data.group }));
       setGroupInput((prev) => !prev);
       setValue('group', data.group);
     } else {
       const cleanedData = Object.fromEntries(
-        Object.entries(data).filter(([key, value]) => value !== ''),
+        Object.entries(data).filter(([, value]) => value !== ''),
       );
-      console.log(cleanedData);
-      // dispatch(ordersActions.patchOrder({ id, data: cleanedData }));
+      dispatch(ordersActions.updateById({ id, order: cleanedData }));
     }
   };
 

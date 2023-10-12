@@ -24,7 +24,7 @@ const OrdersPage: FC = () => {
 
   useEffect(() => {
     dispatch(ordersActions.getAllWithPagination(query));
-  }, [dispatch, query]);
+  }, [dispatch, query, ordersWithPagination]);
 
   const setParams = (e: ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value;
