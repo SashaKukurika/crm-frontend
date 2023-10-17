@@ -7,6 +7,7 @@ import {
 } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 
+import { CourseStatusEnum } from '../../enums';
 import { IError, IOrder, IOrdersStatistics, IOrderWithPagination } from '../../interfaces';
 import { orderService } from '../../services';
 
@@ -56,11 +57,13 @@ const updateById = createAsyncThunk<IOrder, { id: number; order: Partial<IOrder>
 );
 
 // перше що повертаю, друге що передаю в функцію
-const addComment = createAsyncThunk<any, { id: number; comment: any }>(
-  'ordersSlice/update',
-  async ({ id, comment }, { rejectWithValue }) => {
+const addComment = createAsyncThunk<any, { id: number; commentInfo: any }>(
+  'ordersSlice/addComment',
+  async ({ id, commentInfo }, { rejectWithValue }) => {
     try {
-      const { data } = await orderService.addComment(id, comment);
+      console.log(commentInfo, 'comment');
+      const { data } = await orderService.addComment(id, commentInfo);
+      console.log(data, 'data addComment');
       return data;
     } catch (e) {
       const err = e as AxiosError;
@@ -103,6 +106,20 @@ const slice = createSlice({
         );
         state.ordersWithPagination.orders[index] = action.payload;
         state.loading = false;
+      })
+      .addCase(addComment.fulfilled, (state, action) => {
+        console.log(action.payload, 'action.payload');
+        state.ordersWithPagination.orders = state.ordersWithPagination.orders.map((order) => {
+          if (order.id === action.payload.order_id) {
+            return {
+              ...order,
+              comments: [action.payload, ...order.comments],
+              status: CourseStatusEnum.IN_WORK,
+              // manager: action.payload.manager,
+            };
+          }
+          return order;
+        });
       })
       // .addCase(addComment.fulfilled, (state, action) => {
       //   state.ordersWithPagination.orders = state.ordersWithPagination.orders.map(

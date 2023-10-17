@@ -16,3 +16,4 @@ export * from './Modal';
 export * from './ModalComments';
 export * from './ModalComment';
 export * from './ClientForm';
+export * from './LoginForm';

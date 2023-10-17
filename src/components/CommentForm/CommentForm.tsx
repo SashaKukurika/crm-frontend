@@ -1,6 +1,8 @@
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 
+import { useAppDispatch } from '../../hooks';
+import { ordersActions } from '../../redux';
 import { FormInput } from '../FormInput';
 
 import './CommentForm.css';
@@ -16,29 +18,33 @@ const CommentForm: FC<IProps> = ({ id, isButtonDisabled, adminProfile }) => {
     register,
     reset,
     handleSubmit,
-    formState: { isValid },
+    formState: { isValid, errors },
   } = useForm({
     mode: 'all',
   });
 
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   const submit = async (data: any) => {
-    const dataToSend = {
+    const commentInfo = {
       ...data,
-      manager: {
-        name: adminProfile?.profile.name,
-        surname: adminProfile?.profile.surname,
-      },
+      // todo add id from userprofile
+      userId: 2,
     };
-    // dispatch(ordersActions.addOrderComment({ id, data: dataToSend }));
-    console.log(dataToSend);
+    dispatch(ordersActions.addComment({ id, commentInfo }));
+    console.log(commentInfo, 'dataToSend');
     reset();
   };
 
   return (
     <form className={'Comment_form'} onSubmit={handleSubmit(submit)}>
-      <FormInput label={'Comment'} name={'comment'} register={register} type={'text'} />
+      <FormInput
+        label={'Comment'}
+        name={'text'}
+        register={register}
+        error={errors.comment}
+        type={'text'}
+      />
 
       <button
         className={`Comment_form_button ${

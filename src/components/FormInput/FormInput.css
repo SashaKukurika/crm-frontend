@@ -15,6 +15,11 @@
     transition: 1s;
 }
 
+.Form_input_error {
+    color: #ff0000;
+    font-size: 0.875rem;
+}
+
 .Form_input_input_red {
     border: 2px solid #e00000;
 }

@@ -1,7 +1,16 @@
 import { FC } from 'react';
 
+import { LoginForm } from '../../components';
+
+import './LoginPage.css';
+
 const LoginPage: FC = () => {
-  return <div>LoginPage</div>;
+  // authService.deleteTokens();
+  return (
+    <div className={'Login_page'}>
+      <LoginForm />
+    </div>
+  );
 };
 
 export { LoginPage };

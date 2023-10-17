@@ -22,9 +22,10 @@ const OrdersPage: FC = () => {
   const { ordersWithPagination } = useAppSelector((state) => state.ordersReducer);
   const dispatch = useAppDispatch();
 
+  // todo завжди завантажується сторінка якщо я додаю ordersWithPagination в deps щоб мінялась відразу група
   useEffect(() => {
     dispatch(ordersActions.getAllWithPagination(query));
-  }, [dispatch, query, ordersWithPagination]);
+  }, [dispatch, query]);
 
   const setParams = (e: ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value;

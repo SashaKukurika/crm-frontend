@@ -37,8 +37,9 @@ export interface IOrder {
   status: string;
 
   group: IGroup;
+  // todo type
+  comments: any;
 }
-
 export interface IOrdersStatistics {
   total: number;
   inWork: number;
