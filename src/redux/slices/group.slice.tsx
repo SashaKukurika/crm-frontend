@@ -62,12 +62,10 @@ const slice = createSlice({
   extraReducers: (builder) =>
     builder
       .addCase(getAll.fulfilled, (state, action) => {
-        state.groups = action.payload;
-        state.loading = false;
+        state.groups = [...state.groups, ...action.payload];
       })
       .addCase(create.fulfilled, (state, action) => {
         state.groups = [...state.groups, action.payload];
-        state.loading = false;
       })
       .addMatcher(isPending(), (state) => {
         state.loading = true;

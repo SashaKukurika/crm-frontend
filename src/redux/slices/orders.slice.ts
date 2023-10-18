@@ -12,21 +12,19 @@ import { IError, IOrder, IOrdersStatistics, IOrderWithPagination } from '../../i
 import { orderService } from '../../services';
 
 interface IState {
-  ordersWithPagination: IOrderWithPagination;
+  orders: IOrder[];
   ordersStatistic: IOrdersStatistics;
-  orderForUpdate: IOrder;
-  trigger: boolean;
   loading: boolean;
-  errors: IError;
+  error: IError;
+  pageCount: number;
 }
 
 const initialState: IState = {
-  ordersWithPagination: null,
+  orders: [],
   ordersStatistic: null,
-  errors: null,
-  orderForUpdate: null,
-  trigger: false,
+  error: null,
   loading: true,
+  pageCount: null,
 };
 
 const getAllWithPagination = createAsyncThunk<IOrderWithPagination, URLSearchParams>(
@@ -44,11 +42,18 @@ const getAllWithPagination = createAsyncThunk<IOrderWithPagination, URLSearchPar
 
 // перше що повертаю, друге що передаю в функцію
 const updateById = createAsyncThunk<IOrder, { id: number; order: Partial<IOrder> }>(
-  'ordersSlice/update',
-  async ({ id, order }, { rejectWithValue }) => {
+  'ordersSlice/updateById',
+  async ({ id, order }, { rejectWithValue, getState }) => {
     try {
+      console.log(order);
       const { data } = await orderService.updateById(id, order);
-      return data;
+      console.log(data);
+      const state = getState() as any;
+      const { groups } = state.groupReducer;
+
+      const group = groups.find((group: any) => group.id === data.group);
+      console.log(group);
+      return { ...data, group };
     } catch (e) {
       const err = e as AxiosError;
       return rejectWithValue(err.response.data);
@@ -61,7 +66,6 @@ const addComment = createAsyncThunk<any, { id: number; commentInfo: any }>(
   'ordersSlice/addComment',
   async ({ id, commentInfo }, { rejectWithValue }) => {
     try {
-      console.log(commentInfo, 'comment');
       const { data } = await orderService.addComment(id, commentInfo);
       console.log(data, 'data addComment');
       return data;
@@ -88,28 +92,21 @@ const getOrdersStatistics = createAsyncThunk<IOrdersStatistics>(
 const slice = createSlice({
   name: 'ordersSlice',
   initialState,
-  reducers: {
-    setOrderForUpdate: (state, action) => {
-      state.orderForUpdate = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) =>
     builder
       .addCase(getAllWithPagination.fulfilled, (state, action) => {
-        state.ordersWithPagination = action.payload;
-        state.loading = false;
+        state.orders = action.payload.orders;
+        state.pageCount = action.payload.pageCount;
       })
       .addCase(updateById.fulfilled, (state, action) => {
-        // state.ordersWithPagination.orders = action.payload;
-        const index = state.ordersWithPagination.orders.findIndex(
-          (order) => order.id === action.payload.id,
-        );
-        state.ordersWithPagination.orders[index] = action.payload;
-        state.loading = false;
+        console.log(action.payload);
+        const index = state.orders.findIndex((order) => order.id === action.payload.id);
+        state.orders[index] = action.payload;
       })
       .addCase(addComment.fulfilled, (state, action) => {
-        console.log(action.payload, 'action.payload');
-        state.ordersWithPagination.orders = state.ordersWithPagination.orders.map((order) => {
+        console.log(action.payload.id);
+        state.orders = state.orders.map((order) => {
           if (order.id === action.payload.order_id) {
             return {
               ...order,
@@ -136,7 +133,6 @@ const slice = createSlice({
       .addCase(getOrdersStatistics.fulfilled, (state, action) => {
         state.ordersStatistic = action.payload;
         console.log(state.ordersStatistic);
-        state.loading = false;
       })
       // .addCase(getAllWithPagination.pending, (state) => {
       //   state.loading = true;
@@ -147,18 +143,15 @@ const slice = createSlice({
       // })
       .addMatcher(isPending(), (state) => {
         state.loading = true;
-        state.errors = null;
+        state.error = null;
       })
       .addMatcher(isFulfilled(), (state) => {
         state.loading = false;
-        state.errors = null;
+        state.error = null;
       })
       .addMatcher(isRejectedWithValue(), (state, action) => {
-        state.errors = action.payload;
+        state.error = action.payload;
         state.loading = false;
-      })
-      .addMatcher(isFulfilled(updateById), (state) => {
-        state.trigger = !state.trigger;
       }),
 });
 

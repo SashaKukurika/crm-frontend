@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useEffect } from 'react';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import {
@@ -16,16 +16,24 @@ import { ordersActions } from '../../redux';
 import './OrdersPage.css';
 
 const OrdersPage: FC = () => {
-  const loading = false;
   const [query, setQuery] = useSearchParams({ page: '1' });
 
-  const { ordersWithPagination } = useAppSelector((state) => state.ordersReducer);
   const dispatch = useAppDispatch();
+
+  const { orders, loading } = useAppSelector((state) => state.ordersReducer);
+  const ordersWithPagination = { ...orders, pageCount: 1 };
+  const [debouncedValue, setDebouncedValue] = useState(query);
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedValue(query), 400);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [query]);
 
   // todo завжди завантажується сторінка якщо я додаю ordersWithPagination в deps щоб мінялась відразу група
   useEffect(() => {
-    dispatch(ordersActions.getAllWithPagination(query));
-  }, [dispatch, query]);
+    dispatch(ordersActions.getAllWithPagination(debouncedValue));
+  }, [dispatch, debouncedValue]);
 
   const setParams = (e: ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value;
@@ -67,7 +75,7 @@ const OrdersPage: FC = () => {
       <Header />
 
       <div className={'Orders_page_management'}>
-        <OrderForm setParams={setParams} />
+        <OrderForm setParams={setParams} query={query} />
         <ExelButton />
       </div>
 
@@ -76,7 +84,7 @@ const OrdersPage: FC = () => {
           <Spinner />
         ) : (
           <>
-            <Orders ordersWithPagination={ordersWithPagination} sortByField={sortByField} />
+            <Orders orders={orders} sortByField={sortByField} />
 
             <Pagination
               setQuery={setQuery}

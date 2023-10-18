@@ -21,7 +21,7 @@ const Pagination: FC<IProps> = ({ setQuery, query, pageCount, pageSize }) => {
       return value;
     });
   };
-
+  console.log(query.get('page'));
   return (
     <ReactPaginate
       pageCount={pageCount} // Загальна кількість сторінок

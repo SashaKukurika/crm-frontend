@@ -1,15 +1,12 @@
 import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSearchParams } from 'react-router-dom';
 import { faRotateRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { joiResolver } from '@hookform/resolvers/joi';
 
 import { CourseFormatEnum, CoursesEnum, CourseStatusEnum, CourseTypeEnum } from '../../enums';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { IOrder } from '../../interfaces';
 import { groupActions } from '../../redux';
-import { orderValidator } from '../../validators';
 import { FormInput } from '../FormInput';
 import { FormSelect } from '../FormSelect';
 
@@ -17,25 +14,20 @@ import './OrderForm.css';
 
 interface IProps {
   setParams: (e: any) => void;
+  query: URLSearchParams;
 }
 
-const OrderForm: FC<IProps> = ({ setParams }) => {
+const OrderForm: FC<IProps> = ({ setParams, query }) => {
   const { register, reset } = useForm<IOrder>({
     mode: 'all',
-    resolver: joiResolver(orderValidator),
   });
-  const [query] = useSearchParams();
 
-  const { groups } = useAppSelector((state) => state.groupReducer);
   const dispatch = useAppDispatch();
+  const { groups } = useAppSelector((state) => state.groupReducer);
 
   useEffect(() => {
     dispatch(groupActions.getAll());
   }, [dispatch]);
-  // const search: SubmitHandler<IOrder> = async (orderSearch) => {
-  //   // await setUpdateOrdersSearch(orderSearch);
-  //   console.log(orderSearch);
-  // };
 
   const resetForm = () => {
     reset();
@@ -46,9 +38,8 @@ const OrderForm: FC<IProps> = ({ setParams }) => {
     <form className={'Filter_orders'} onChange={setParams}>
       <div className={'Filter_orders_inputs'}>
         <div className={'Filter_orders_input'}>
-          {/* todo send value from query*/}
           <FormInput
-            type="text"
+            type={'text'}
             label={'Name'}
             name={'name'}
             register={register}
@@ -139,7 +130,7 @@ const OrderForm: FC<IProps> = ({ setParams }) => {
             value={query.get('status') || ''}
           />
         </div>
-        {/* todo add group from api*/}
+
         <div className={'Filter_orders_input'}>
           <FormSelect
             label={'Group'}
@@ -190,6 +181,7 @@ const OrderForm: FC<IProps> = ({ setParams }) => {
                 ? (e.target.value = 'adminProfile.profile.name')
                 : (e.target.value = '')
             }
+            // todo register user and at back
           />
           My
         </label>

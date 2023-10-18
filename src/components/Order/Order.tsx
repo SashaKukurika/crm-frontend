@@ -12,7 +12,6 @@ interface IProps {
 }
 
 const Order: FC<IProps> = ({ order }) => {
-  // const navigate = useNavigate();
   const {
     id,
     age,
@@ -30,6 +29,7 @@ const Order: FC<IProps> = ({ order }) => {
     created_at,
     alreadyPaid,
     group,
+    comments,
   } = order;
 
   const [tableActive, setTableActive] = useState(false);
@@ -130,10 +130,10 @@ const Order: FC<IProps> = ({ order }) => {
 
         <div className={'Orders_table_details_right'}>
           <div className={'Orders_table_content'}>
-            {['comments', 'string'].length > 0 && (
+            {comments.length > 0 && (
               <div onClick={() => setOpenModalComments(true)} className={'Orders_table_comments'}>
-                {['comments', 'string'].slice(0, 3).map((item, index) => (
-                  <Comment key={index} item={item} formatDate={formatDate} />
+                {comments.slice(0, 3).map((item) => (
+                  <Comment key={item.id} item={item} formatDate={formatDate} />
                 ))}
               </div>
             )}

@@ -16,7 +16,16 @@ interface IProps {
   error?: FieldError | Merge<FieldError, FieldErrorsImpl<any>> | any;
 }
 
-const FormInput: FC<IProps> = ({ id, value, register, error, label, name, ...inputProps }) => {
+const FormInput: FC<IProps> = ({
+  id,
+  value,
+  register,
+  type,
+  error,
+  label,
+  name,
+  ...inputProps
+}) => {
   return (
     // todo take params from url and put to input
     <div className="Form_input">
@@ -24,7 +33,7 @@ const FormInput: FC<IProps> = ({ id, value, register, error, label, name, ...inp
         className={`Form_input_input  ${error ? 'Form_input_input_red' : ''}`}
         id={id}
         placeholder={label}
-        value={value}
+        type={type}
         {...register(name)}
         {...inputProps}
       />

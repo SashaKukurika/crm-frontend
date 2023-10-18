@@ -2,18 +2,18 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import { groupReducer, ordersReducer } from './slices';
 
-const rotReducers = combineReducers({
+const rootReducers = combineReducers({
   ordersReducer,
   groupReducer,
 });
 
 const setupStore = () =>
   configureStore({
-    reducer: rotReducers,
+    reducer: rootReducers,
   });
 
-// отримуємо тип даних який нам повертає rotReducers
-type RootState = ReturnType<typeof rotReducers>;
+// отримуємо тип даних який нам повертає rootReducers
+type RootState = ReturnType<typeof rootReducers>;
 type AppStore = ReturnType<typeof setupStore>;
 type AppDispatch = AppStore['dispatch'];
 

@@ -29,10 +29,9 @@ const CommentForm: FC<IProps> = ({ id, isButtonDisabled, adminProfile }) => {
     const commentInfo = {
       ...data,
       // todo add id from userprofile
-      userId: 2,
+      userId: 1,
     };
     dispatch(ordersActions.addComment({ id, commentInfo }));
-    console.log(commentInfo, 'dataToSend');
     reset();
   };
 

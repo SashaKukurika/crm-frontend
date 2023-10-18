@@ -9,6 +9,7 @@ const LogOut: FC = () => {
   const navigate = useNavigate();
 
   const logOut = () => {
+    // todo delete tokens
     // authService.deleteTokens();
     console.log('logout');
     navigate('/login');

@@ -1,3 +1,4 @@
+import { IComment } from './comment.interface';
 import { IGroup } from './group.interface';
 
 export interface IOrderWithPagination {
@@ -38,7 +39,9 @@ export interface IOrder {
 
   group: IGroup;
   // todo type
-  comments: any;
+  comments: IComment[];
+
+  manager?: any;
 }
 export interface IOrdersStatistics {
   total: number;

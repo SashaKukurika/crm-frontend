@@ -64,6 +64,7 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
   const [groupInput, setGroupInput] = useState(false);
 
   const submit: SubmitHandler<IOrder> = async (data: any) => {
+    console.log(data);
     if (groupInput) {
       await dispatch(groupActions.create({ name: data.group }));
       setGroupInput((prev) => !prev);
@@ -72,6 +73,7 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
       const cleanedData = Object.fromEntries(
         Object.entries(data).filter(([, value]) => value !== ''),
       );
+      console.log(cleanedData);
       dispatch(ordersActions.updateById({ id, order: cleanedData }));
     }
   };
@@ -197,13 +199,7 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
         </div>
 
         <div className={'Client_form_item'}>
-          <FormInput
-            id={phone}
-            type={'number'}
-            name={'phone'}
-            label={'Phone'}
-            register={register}
-          />
+          <FormInput id={phone} type={'text'} name={'phone'} label={'Phone'} register={register} />
         </div>
 
         <div className={'Client_form_item'}>
