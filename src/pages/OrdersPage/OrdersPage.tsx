@@ -20,8 +20,8 @@ const OrdersPage: FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const { orders, loading } = useAppSelector((state) => state.ordersReducer);
-  const ordersWithPagination = { ...orders, pageCount: 1 };
+  const { orders, loading, totalCount } = useAppSelector((state) => state.ordersReducer);
+
   const [debouncedValue, setDebouncedValue] = useState(query);
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedValue(query), 400);
@@ -87,9 +87,15 @@ const OrdersPage: FC = () => {
             <Orders orders={orders} sortByField={sortByField} />
 
             <Pagination
-              setQuery={setQuery}
-              query={query}
-              pageCount={ordersWithPagination && ordersWithPagination.pageCount}
+              currentPage={+query.get('page')}
+              totalCount={totalCount}
+              pageSize={25}
+              onPageChange={(page) =>
+                setQuery((value) => {
+                  value.set('page', page.toString());
+                  return value;
+                })
+              }
             />
           </>
         )}

@@ -1,45 +1,91 @@
 import { FC } from 'react';
-import ReactPaginate from 'react-paginate';
 import { SetURLSearchParams } from 'react-router-dom';
+import classnames from 'classnames';
+
+import { DOTS, IPaginationProps, usePagination } from '../../hooks';
 
 import './Pagination.css';
 
 interface IProps {
-  setQuery?: SetURLSearchParams;
-  query?: URLSearchParams;
-  pageCount: number;
-  // currentPage?: number;
-  pageSize?: number;
+  totalCount: number;
+  pageSize: number;
+  siblingCount?: number;
+  currentPage: number;
   onPageChange?: (page: number) => void;
 }
 
-const Pagination: FC<IProps> = ({ setQuery, query, pageCount, pageSize }) => {
-  const handlePageClick = (selectedPage: { selected: number }) => {
-    const page = 1 + selectedPage.selected;
-    setQuery((value) => {
-      value.set('page', page.toString());
-      return value;
-    });
+const Pagination: FC<IProps> = ({
+  totalCount,
+  siblingCount = 2,
+  currentPage,
+  pageSize,
+  onPageChange,
+}) => {
+  const paginationRange = usePagination({
+    currentPage,
+    totalCount,
+    siblingCount,
+    pageSize,
+  });
+  const className = 'Pagination';
+  // If there are less than 2 times in pagination range we shall not render the component
+  if (currentPage === 0 || paginationRange.length < 2) {
+    return null;
+  }
+
+  const onNext = () => {
+    onPageChange(currentPage + 1);
   };
-  console.log(query.get('page'));
+
+  const onPrevious = () => {
+    onPageChange(currentPage - 1);
+  };
+
+  const lastPage = paginationRange[paginationRange.length - 1];
   return (
-    <ReactPaginate
-      pageCount={pageCount} // Загальна кількість сторінок
-      pageRangeDisplayed={7} // Кількість відображуваних сторінок
-      marginPagesDisplayed={1} // Кількість відображуваних сторінок на краях
-      previousLabel={'<'} // Текст кнопки "Попередня"
-      nextLabel={'>'} // Текст кнопки "Наступна"
-      breakLabel={'...'} // Текст для роздільників
-      onPageChange={handlePageClick} // Обробник подій при зміні сторінки
-      containerClassName={'Pagination'} // Клас контейнера
-      activeClassName={'Pagination_item_active'} // Клас активної сторінки
-      pageClassName={'Pagination_item'}
-      disabledClassName={'Pagination_item_disabled'}
-      breakClassName={'Pagination_item_dots Pagination_item'}
-      nextClassName={'Pagination_arrow Pagination_item'}
-      previousClassName={'Pagination_arrow Pagination_item'}
-      initialPage={+query.get('page') - 1}
-    />
+    <ul className={classnames('Pagination', { [className]: className })}>
+      {/* Left navigation arrow */}
+      <li
+        className={classnames('Pagination_item', {
+          disabled: currentPage === 1,
+        })}
+        onClick={onPrevious}
+      >
+        <div className="Pagination_arrow">{`<`}</div>
+      </li>
+      {paginationRange.map((pageNumber, index) => {
+        // If the pageItem is a DOT, render the DOTS unicode character
+        if (pageNumber === DOTS) {
+          return (
+            <li className="Pagination_item Pagination_item_dots" key={index}>
+              &#8230;
+            </li>
+          );
+        }
+
+        // Render our Page Pills
+        return (
+          <li
+            className={classnames('Pagination_item', {
+              selected: pageNumber === currentPage,
+            })}
+            onClick={() => onPageChange(+pageNumber)}
+            key={index}
+          >
+            {pageNumber}
+          </li>
+        );
+      })}
+      {/*  Right Navigation arrow */}
+      <li
+        className={classnames('Pagination_item', {
+          disabled: currentPage === lastPage,
+        })}
+        onClick={onNext}
+      >
+        <div className="Pagination_arrow">{`>`}</div>
+      </li>
+    </ul>
   );
 };
 

@@ -56,6 +56,7 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
       alreadyPaid: alreadyPaid,
       group: group ? group.name : '',
     },
+    // todo add resolver
     // resolver: yupResolver(clientValidator),
   });
 
@@ -63,18 +64,17 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
 
   const [groupInput, setGroupInput] = useState(false);
 
-  const submit: SubmitHandler<IOrder> = async (data: any) => {
-    console.log(data);
+  const submit: SubmitHandler<IOrder> = async (data: IOrder) => {
     if (groupInput) {
-      await dispatch(groupActions.create({ name: data.group }));
+      await dispatch(groupActions.create({ name: data.group.name }));
       setGroupInput((prev) => !prev);
-      setValue('group', data.group);
+      setValue('group', data.group.name);
     } else {
       const cleanedData = Object.fromEntries(
-        Object.entries(data).filter(([, value]) => value !== ''),
+        Object.entries(data).filter(([, value]) => value !== '' && value !== null),
       );
-      console.log(cleanedData);
       dispatch(ordersActions.updateById({ id, order: cleanedData }));
+      // todo dont came data from back
     }
   };
 

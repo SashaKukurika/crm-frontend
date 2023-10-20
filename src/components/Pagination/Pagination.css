@@ -25,21 +25,21 @@ a {
     width: 100%;
 }
 
-.Pagination_item_dots:hover {
-    background-color: #76b852;
-    cursor: default;
-}
-
 .Pagination_item:hover {
     background-color: #388E3C;
     cursor: pointer;
 }
 
-.Pagination_item_active {
+.Pagination_item_dots:hover {
+    background-color: #76b852;
+    cursor: default;
+}
+
+.Pagination_item.selected {
     background-color: #388E3C
 }
 
-.Pagination_item_disabled {
+.Pagination_item.disabled {
     display: none;
 }
 

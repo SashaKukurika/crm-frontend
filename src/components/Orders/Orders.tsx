@@ -17,7 +17,9 @@ const Orders: FC<IProps> = ({ sortByField, orders }) => {
       <div className={'Orders_table'}>
         <SortOrders sortByField={sortByField} />
 
-        {orders && orders.map((order) => <Order order={order} key={order.id} />)}
+        {orders.map((order) => (
+          <Order order={order} key={order.id} />
+        ))}
       </div>
     </>
   );

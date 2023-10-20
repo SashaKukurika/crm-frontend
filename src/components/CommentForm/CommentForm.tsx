@@ -21,6 +21,7 @@ const CommentForm: FC<IProps> = ({ id, isButtonDisabled, adminProfile }) => {
     formState: { isValid, errors },
   } = useForm({
     mode: 'all',
+    // todo add resolver
   });
 
   const dispatch = useAppDispatch();

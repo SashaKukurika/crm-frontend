@@ -34,6 +34,7 @@ const FormInput: FC<IProps> = ({
         id={id}
         placeholder={label}
         type={type}
+        value={value}
         {...register(name)}
         {...inputProps}
       />

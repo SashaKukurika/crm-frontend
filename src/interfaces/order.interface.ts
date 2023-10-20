@@ -3,7 +3,7 @@ import { IGroup } from './group.interface';
 
 export interface IOrderWithPagination {
   orders: IOrder[];
-  pageCount: number;
+  totalCount: number;
 }
 
 export interface IOrder {

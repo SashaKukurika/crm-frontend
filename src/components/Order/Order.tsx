@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 
 import { IOrder } from '../../interfaces';
+import { ISetState } from '../../types';
 import { ClientForm } from '../ClientForm';
 import { Comment } from '../Comment';
 import { CommentForm } from '../CommentForm';
@@ -156,7 +157,7 @@ const Order: FC<IProps> = ({ order }) => {
           </button>
 
           <Modal closeModal={setOpenModalComments} openModal={openModalComments}>
-            <ModalComments comments={'comments'} setOpenModalComments={setOpenModalComments} />
+            <ModalComments comments={comments} setOpenModalComments={setOpenModalComments} />
           </Modal>
 
           <Modal closeModal={setOpenModalForm} openModal={openModalForm}>
