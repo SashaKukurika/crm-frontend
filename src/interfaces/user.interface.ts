@@ -4,6 +4,7 @@ export interface IUser {
   surname: string;
   email: string;
   password: string;
+  is_active: boolean;
   // todo add enum
   role: string;
 }

@@ -64,17 +64,17 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
 
   const [groupInput, setGroupInput] = useState(false);
 
-  const submit: SubmitHandler<IOrder> = async (data: IOrder) => {
+  const submit: SubmitHandler<IOrder> = async (data: any) => {
     if (groupInput) {
-      await dispatch(groupActions.create({ name: data.group.name }));
+      await dispatch(groupActions.create({ name: data.group }));
       setGroupInput((prev) => !prev);
-      setValue('group', data.group.name);
+      setValue('group', data.group);
     } else {
       const cleanedData = Object.fromEntries(
         Object.entries(data).filter(([, value]) => value !== '' && value !== null),
       );
       dispatch(ordersActions.updateById({ id, order: cleanedData }));
-      // todo dont came data from back
+      console.log(cleanedData);
     }
   };
 

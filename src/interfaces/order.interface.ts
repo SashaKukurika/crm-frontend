@@ -1,5 +1,6 @@
 import { IComment } from './comment.interface';
 import { IGroup } from './group.interface';
+import { IUser } from './user.interface';
 
 export interface IOrderWithPagination {
   orders: IOrder[];
@@ -41,7 +42,7 @@ export interface IOrder {
   // todo type
   comments: IComment[];
 
-  manager?: any;
+  manager?: IUser;
 }
 export interface IOrdersStatistics {
   total: number;

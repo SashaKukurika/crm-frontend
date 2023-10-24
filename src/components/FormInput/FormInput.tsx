@@ -26,6 +26,11 @@ const FormInput: FC<IProps> = ({
   name,
   ...inputProps
 }) => {
+  // let valueAsNumber = false;
+  // if (type === 'number') {
+  //   console.log(type);
+  //   valueAsNumber = !valueAsNumber;
+  // }
   return (
     // todo take params from url and put to input
     <div className="Form_input">
@@ -35,7 +40,7 @@ const FormInput: FC<IProps> = ({
         placeholder={label}
         type={type}
         value={value}
-        {...register(name)}
+        {...register(name, { valueAsNumber: type === 'number' })}
         {...inputProps}
       />
 

@@ -46,7 +46,9 @@ const create = createAsyncThunk<IGroup, { name: string }>(
   'groupSlice/create',
   async ({ name }, { rejectWithValue }) => {
     try {
+      console.log(name);
       const { data } = await groupService.create(name);
+      console.log(data);
       return data;
     } catch (e) {
       const err = e as AxiosError;

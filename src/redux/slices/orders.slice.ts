@@ -65,7 +65,6 @@ const addComment = createAsyncThunk<IComment, { id: number; commentInfo: any }>(
   async ({ id, commentInfo }, { rejectWithValue }) => {
     try {
       const { data } = await orderService.addComment(id, commentInfo);
-      console.log(data, 'data addComment');
       return data;
     } catch (e) {
       const err = e as AxiosError;
@@ -102,19 +101,18 @@ const slice = createSlice({
         state.orders[index] = { ...state.orders[index], ...action.payload };
       })
       .addCase(addComment.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.orders = state.orders.map((order) => {
-          order.comments.map((comment) => {
-            console.log(comment);
-            if (comment.id === action.payload.id) {
-              return {
-                ...order,
-                comments: [action.payload, ...order.comments],
-                status: CourseStatusEnum.IN_WORK,
-                // manager: action.payload.manager,
-              };
-            }
-          });
+          if (order.id === action.payload.orderId) {
+            delete action.payload.orderId;
+            const updatedComments = [action.payload, ...order.comments];
+            return {
+              ...order,
+              comments: updatedComments,
+              // якщо певний статус уже був ми його незмінюємо, якщож не було ставимо в роботу
+              status: order.status ? order.status : CourseStatusEnum.IN_WORK,
+              manager: action.payload.user,
+            };
+          }
           return order;
         });
       })
@@ -122,7 +120,7 @@ const slice = createSlice({
         state.ordersStatistic = action.payload;
         console.log(state.ordersStatistic);
       })
-      .addMatcher(isPending(), (state) => {
+      .addMatcher(isPending(getAllWithPagination, updateById), (state) => {
         state.loading = true;
         state.error = null;
       })
