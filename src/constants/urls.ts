@@ -11,7 +11,7 @@ const urls = {
     getById: (id: number): string => `${orders}/${id}`,
     addComment: (id: number): string => `${orders}/${id}/comments`,
     getStatistics: `${orders}/statistics`,
-    getExel: `${orders}/exel`,
+    getExcel: `${orders}/excel`,
   },
 
   users: {

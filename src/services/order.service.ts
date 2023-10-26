@@ -13,7 +13,7 @@ const orderService = {
     axiosService.post(urls.orders.addComment(id), commentInfo),
   getOrdersStatistics: (): IRes<IOrdersStatistics> => axiosService.get(urls.orders.getStatistics),
   // todo add logic
-  getExel: () => axiosService.get(urls.orders.getExel),
+  getExcel: () => axiosService.get(urls.orders.getExcel, { responseType: 'blob' }),
 };
 
 export { orderService };
