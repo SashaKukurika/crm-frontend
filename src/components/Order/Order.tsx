@@ -1,8 +1,6 @@
 import { FC, useState } from 'react';
-import { log } from 'util';
 
 import { IOrder } from '../../interfaces';
-import { ISetState } from '../../types';
 import { ClientForm } from '../ClientForm';
 import { Comment } from '../Comment';
 import { CommentForm } from '../CommentForm';
@@ -40,7 +38,7 @@ const Order: FC<IProps> = ({ order }) => {
 
   const [openModalComments, setOpenModalComments] = useState(false);
   // todo import manager
-  // const isButtonDisabled = manager !== null && adminProfile?.profile.name !== manager?.name;
+  // const isButtonDisabled = manager !== null && adminProfile?.profile.name === manager?.name;
   const isButtonDisabled = false;
   const formatDate = (date: Date) => {
     if (!date) {

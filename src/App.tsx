@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 import { MainLayout } from './layouts';
-import { LoginPage, OrdersPage, Page404 } from './pages';
+import { AdminPage, LoginPage, OrdersPage, Page404 } from './pages';
 
 const App = () => {
   return (
@@ -12,6 +12,7 @@ const App = () => {
          кліку на лінк будемо переходити до element*/}
         <Route path={'/login'} element={<LoginPage />} />
         <Route path={'/orders'} element={<OrdersPage />} />
+        <Route path={'/admin'} element={<AdminPage />} />
 
         <Route path="*" element={<Page404 />} />
       </Route>

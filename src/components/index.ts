@@ -17,3 +17,5 @@ export * from './ModalComments';
 export * from './ModalComment';
 export * from './ClientForm';
 export * from './LoginForm';
+export * from './OrdersStatistic';
+export * from './CreateUserForm';

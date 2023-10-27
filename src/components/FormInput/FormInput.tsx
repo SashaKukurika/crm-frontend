@@ -26,13 +26,7 @@ const FormInput: FC<IProps> = ({
   name,
   ...inputProps
 }) => {
-  // let valueAsNumber = false;
-  // if (type === 'number') {
-  //   console.log(type);
-  //   valueAsNumber = !valueAsNumber;
-  // }
   return (
-    // todo take params from url and put to input
     <div className="Form_input">
       <input
         className={`Form_input_input  ${error ? 'Form_input_input_red' : ''}`}

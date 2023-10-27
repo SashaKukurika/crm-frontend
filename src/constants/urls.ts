@@ -10,7 +10,7 @@ const urls = {
     orders,
     getById: (id: number): string => `${orders}/${id}`,
     addComment: (id: number): string => `${orders}/${id}/comments`,
-    getStatistics: `${orders}/statistics`,
+    getStatistic: `${orders}/statistic`,
     getExcel: `${orders}/excel`,
   },
 

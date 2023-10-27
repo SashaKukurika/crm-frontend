@@ -1,5 +1,5 @@
 import { urls } from '../constants';
-import { IOrder, IOrdersStatistics, IOrderWithPagination } from '../interfaces';
+import { IOrder, IOrdersStatistic, IOrderWithPagination, IParams } from '../interfaces';
 import { IRes } from '../types';
 
 import { axiosService } from './axios.service';
@@ -11,9 +11,9 @@ const orderService = {
     axiosService.patch(urls.orders.getById(id), order),
   addComment: (id: number, commentInfo: any) =>
     axiosService.post(urls.orders.addComment(id), commentInfo),
-  getOrdersStatistics: (): IRes<IOrdersStatistics> => axiosService.get(urls.orders.getStatistics),
-  // todo add logic
-  getExcel: () => axiosService.get(urls.orders.getExcel, { responseType: 'blob' }),
+  getOrdersStatistic: (): IRes<IOrdersStatistic> => axiosService.get(urls.orders.getStatistic),
+  getExcel: (params: IParams) =>
+    axiosService.get(urls.orders.getExcel, { responseType: 'blob', params }),
 };
 
 export { orderService };

@@ -8,13 +8,12 @@ import {
 import { AxiosError } from 'axios';
 
 import { CourseStatusEnum } from '../../enums';
-import { IError, IOrder, IOrdersStatistics, IOrderWithPagination } from '../../interfaces';
-import { IComment } from '../../interfaces/comment.interface';
+import { IComment, IError, IOrder, IOrdersStatistic, IOrderWithPagination } from '../../interfaces';
 import { orderService } from '../../services';
 
 interface IState {
   orders: IOrder[];
-  ordersStatistic: IOrdersStatistics;
+  ordersStatistic: IOrdersStatistic;
   loading: boolean;
   error: IError;
   totalCount: number;
@@ -44,13 +43,9 @@ const getAllWithPagination = createAsyncThunk<IOrderWithPagination, URLSearchPar
 // перше що повертаю, друге що передаю в функцію
 const updateById = createAsyncThunk<IOrder, { id: number; order: Partial<IOrder> }>(
   'ordersSlice/updateById',
-  async ({ id, order }, { rejectWithValue, getState }) => {
+  async ({ id, order }, { rejectWithValue }) => {
     try {
       const { data } = await orderService.updateById(id, order);
-      // console.log(data);
-      // const state = getState() as any;
-      // const { groups } = state.groupReducer;
-      // const group = groups.find((group: any) => group.id === data.group);
       return data;
     } catch (e) {
       const err = e as AxiosError;
@@ -73,11 +68,11 @@ const addComment = createAsyncThunk<IComment, { id: number; commentInfo: any }>(
   },
 );
 
-const getOrdersStatistics = createAsyncThunk<IOrdersStatistics>(
+const getOrdersStatistic = createAsyncThunk<IOrdersStatistic>(
   'ordersSlice/getOrdersStatistics',
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await orderService.getOrdersStatistics();
+      const { data } = await orderService.getOrdersStatistic();
       return data;
     } catch (e) {
       const err = e as AxiosError;
@@ -116,11 +111,10 @@ const slice = createSlice({
           return order;
         });
       })
-      .addCase(getOrdersStatistics.fulfilled, (state, action) => {
+      .addCase(getOrdersStatistic.fulfilled, (state, action) => {
         state.ordersStatistic = action.payload;
-        console.log(state.ordersStatistic);
       })
-      .addMatcher(isPending(getAllWithPagination, updateById), (state) => {
+      .addMatcher(isPending(getAllWithPagination, updateById, getOrdersStatistic), (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -140,7 +134,7 @@ const ordersActions = {
   ...actions,
   getAllWithPagination,
   updateById,
-  getOrdersStatistics,
+  getOrdersStatistic,
   addComment,
 };
 

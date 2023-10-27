@@ -25,7 +25,7 @@ const Header: FC = () => {
         {/*  className={`header__button ${!adminProfile?.is_superuser && "header__button_hidden"}`}*/}
         {/*  onClick={() => navigate("/adminPanel")}*/}
         {/* >*/}
-        <button onClick={() => navigate('/adminPanel')} className={'Header_button'}>
+        <button onClick={() => navigate('/admin')} className={'Header_button'}>
           <FontAwesomeIcon
             className={'Header_button_img'}
             icon={faUserGear}

@@ -1,8 +1,10 @@
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 import { useAppDispatch } from '../../hooks';
 import { ordersActions } from '../../redux';
+import { commentValidator } from '../../validators';
 import { FormInput } from '../FormInput';
 
 import './CommentForm.css';
@@ -10,6 +12,7 @@ import './CommentForm.css';
 interface IProps {
   id: number;
   isButtonDisabled: boolean;
+  // todo add type for userprofile
   adminProfile: any;
 }
 
@@ -21,9 +24,9 @@ const CommentForm: FC<IProps> = ({ id, isButtonDisabled, adminProfile }) => {
     formState: { isValid, errors },
   } = useForm({
     mode: 'all',
-    // todo add resolver
+    resolver: joiResolver(commentValidator),
   });
-
+  console.log(errors);
   const dispatch = useAppDispatch();
 
   const submit = async (data: any) => {
@@ -35,15 +38,15 @@ const CommentForm: FC<IProps> = ({ id, isButtonDisabled, adminProfile }) => {
     dispatch(ordersActions.addComment({ id, commentInfo }));
     reset();
   };
-
   return (
     <form className={'Comment_form'} onSubmit={handleSubmit(submit)}>
       <FormInput
+        id={'comment'}
         label={'Comment'}
         name={'text'}
-        register={register}
-        error={errors.comment}
         type={'text'}
+        register={register}
+        error={errors.text}
       />
 
       <button

@@ -1,0 +1,17 @@
+.Create_user_form {
+    background-color: #fff;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 30px;
+}
+
+.Create_user_form_buttons {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.Create_user_form_button {
+    padding: 10px;
+}

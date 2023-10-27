@@ -1,3 +1,5 @@
+import { CourseStatusEnum } from '../enums';
+
 import { IComment } from './comment.interface';
 import { IGroup } from './group.interface';
 import { IUser } from './user.interface';
@@ -44,11 +46,13 @@ export interface IOrder {
 
   manager?: IUser;
 }
-export interface IOrdersStatistics {
+export interface IOrdersStatistic {
   total: number;
-  inWork: number;
-  agree: number;
-  disagree: number;
-  dubbing: number;
-  nullOrders: number;
+
+  statuses: Status[];
+}
+
+interface Status {
+  status: CourseStatusEnum;
+  count: number;
 }
