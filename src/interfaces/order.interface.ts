@@ -52,7 +52,7 @@ export interface IOrdersStatistic {
   statuses: Status[];
 }
 
-interface Status {
+export interface Status {
   status: CourseStatusEnum;
   count: number;
 }

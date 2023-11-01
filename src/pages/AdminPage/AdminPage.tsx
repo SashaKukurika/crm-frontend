@@ -1,20 +1,31 @@
 import { FC, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
-import { CreateUserForm, Footer, Header, Modal, OrdersStatistic, Spinner } from '../../components';
-import { useAppDispatch } from '../../hooks';
-import { ordersActions } from '../../redux';
+import {
+  CreateUserForm,
+  Footer,
+  Header,
+  Modal,
+  OrdersStatistic,
+  Pagination,
+  Spinner,
+  User,
+} from '../../components';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { ordersActions, usersActions } from '../../redux';
 
 import './AdminPage.css';
 const AdminPage: FC = () => {
+  const [query, setQuery] = useSearchParams({ page: '1' });
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    // dispatch(usersActions.getUsers());
+    dispatch(usersActions.getAll(query));
     dispatch(ordersActions.getOrdersStatistic());
-  }, [dispatch]);
+  }, [dispatch, query]);
 
-  // const { users, loading } = useSelector((state) => state.usersReducer);
-  const loading = false;
+  const { users, loading, totalCount } = useAppSelector((state) => state.usersReducer);
 
   const [openCreateUser, setOpenCreateUser] = useState(false);
 
@@ -26,7 +37,7 @@ const AdminPage: FC = () => {
         {loading ? (
           <Spinner />
         ) : (
-          <div>
+          <>
             <div className={'Admin_page_statistic'}>
               <div className={'Admin_page_title'}>Orders statistic:</div>
               <OrdersStatistic />
@@ -37,14 +48,25 @@ const AdminPage: FC = () => {
             </button>
 
             <div className={'Admin_page_users'}>
-              {/* {users.map((user) => (*/}
-              {/*  <User key={user.id} user={user} />*/}
-              {/* ))}*/}
+              {users.map((user) => (
+                <User key={user.id} user={user} />
+              ))}
             </div>
-          </div>
+
+            <Pagination
+              totalCount={totalCount}
+              pageSize={2}
+              currentPage={+query.get('page')}
+              onPageChange={(page) =>
+                setQuery((value) => {
+                  value.set('page', page.toString());
+                  return value;
+                })
+              }
+            />
+          </>
         )}
       </div>
-
       <Modal closeModal={setOpenCreateUser} openModal={openCreateUser}>
         <CreateUserForm setOpenCreateUser={setOpenCreateUser} />
       </Modal>

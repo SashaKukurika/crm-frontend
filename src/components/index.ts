@@ -19,3 +19,5 @@ export * from './ClientForm';
 export * from './LoginForm';
 export * from './OrdersStatistic';
 export * from './CreateUserForm';
+export * from './User';
+export * from './UserStatistic';

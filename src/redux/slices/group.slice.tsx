@@ -7,9 +7,8 @@ import {
 } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 
-import { IError } from '../../interfaces';
-import { IGroup } from '../../interfaces/group.interface';
-import { groupService } from '../../services/group.service';
+import { IError, IGroup } from '../../interfaces';
+import { groupService } from '../../services';
 
 interface IState {
   groups: IGroup[];
@@ -46,7 +45,6 @@ const create = createAsyncThunk<IGroup, { name: string }>(
   'groupSlice/create',
   async ({ name }, { rejectWithValue }) => {
     try {
-      console.log(name);
       const { data } = await groupService.create(name);
       console.log(data);
       return data;

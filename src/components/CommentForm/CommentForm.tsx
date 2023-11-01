@@ -26,7 +26,7 @@ const CommentForm: FC<IProps> = ({ id, isButtonDisabled, adminProfile }) => {
     mode: 'all',
     resolver: joiResolver(commentValidator),
   });
-  console.log(errors);
+
   const dispatch = useAppDispatch();
 
   const submit = async (data: any) => {

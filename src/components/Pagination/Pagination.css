@@ -9,7 +9,7 @@
     text-align: center;
     margin: auto 4px;
     color: white;
-    background-color: #76b852;
+    background-color: var(--main-color);
     display: flex;
     box-sizing: border-box;
     align-items: center;
@@ -26,17 +26,17 @@ a {
 }
 
 .Pagination_item:hover {
-    background-color: #388E3C;
+    background-color: var(--hover-color);
     cursor: pointer;
 }
 
 .Pagination_item_dots:hover {
-    background-color: #76b852;
+    background-color: var(--main-color);
     cursor: default;
 }
 
 .Pagination_item.selected {
-    background-color: #388E3C
+    background-color: var(--hover-color)
 }
 
 .Pagination_item.disabled {

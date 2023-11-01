@@ -16,12 +16,12 @@
 .Client_form::-webkit-scrollbar {
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
-    background: #76b852;
+    background: var(--main-color);
     width: 10px;
 }
 
 .Client_form::-webkit-scrollbar-thumb {
-    background: #43A047;
+    background: var(--second-color);
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
 }

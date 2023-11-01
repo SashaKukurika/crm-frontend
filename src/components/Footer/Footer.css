@@ -1,5 +1,5 @@
 .Footer {
     height: 3.125rem;
-    background: #76b852;
+    background: var(--main-color);
     flex-shrink: 0;
 }

@@ -16,6 +16,7 @@ const urls = {
 
   users: {
     users,
+    getStatistic: (id: number): string => `${users}/statistic/${id}`,
   },
   auth: {
     auth,

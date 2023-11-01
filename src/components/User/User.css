@@ -1,0 +1,32 @@
+.User {
+    display: flex;
+    gap: 40px;
+    padding: 20px;
+    border: 2px solid var(--main-color);
+    border-radius: 10px;
+}
+
+.User_info {
+    display: flex;
+    flex-direction: column;
+    width: 12.5rem;
+}
+
+.User_buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.User_button {
+    padding: 10px;
+}
+
+.User_button:hover {
+    cursor: pointer;
+}
+
+.Link {
+    margin: 10px 0;
+}

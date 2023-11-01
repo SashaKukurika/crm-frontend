@@ -19,14 +19,14 @@
 }
 
 .Orders_table_row_hover:hover {
-    background: #43A047;
+    background: var(--second-color);
     color: #FFFFFF;
 }
 
 .Orders_table_row.Orders_table_header {
     font-weight: 700;
     color: #ffffff;
-    background: #76b852;
+    background: var(--main-color);
 }
 
 .Orders_table_cell {

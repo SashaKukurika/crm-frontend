@@ -28,7 +28,7 @@
 }
 
 .Filter_orders_checkbox:checked {
-    accent-color: #43A047;
+    accent-color: var(--second-color);
 }
 
 .Filter_orders_checkbox_button {

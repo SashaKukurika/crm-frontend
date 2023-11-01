@@ -1,8 +1,7 @@
 import { FC } from 'react';
-import { SetURLSearchParams } from 'react-router-dom';
 import classnames from 'classnames';
 
-import { DOTS, IPaginationProps, usePagination } from '../../hooks';
+import { DOTS, usePagination } from '../../hooks';
 
 import './Pagination.css';
 

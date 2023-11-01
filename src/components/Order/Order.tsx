@@ -1,5 +1,6 @@
 import { FC, useState } from 'react';
 
+import { formatDate } from '../../helpers/formatDate.helper';
 import { IOrder } from '../../interfaces';
 import { ClientForm } from '../ClientForm';
 import { Comment } from '../Comment';
@@ -40,16 +41,6 @@ const Order: FC<IProps> = ({ order }) => {
   // todo import manager
   // const isButtonDisabled = manager !== null && adminProfile?.profile.name === manager?.name;
   const isButtonDisabled = false;
-  const formatDate = (date: Date) => {
-    if (!date) {
-      return 'null';
-    }
-    return new Date(date).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  };
 
   return (
     <div
@@ -133,7 +124,7 @@ const Order: FC<IProps> = ({ order }) => {
             {comments.length > 0 && (
               <div onClick={() => setOpenModalComments(true)} className={'Orders_table_comments'}>
                 {comments.slice(0, 3).map((item) => (
-                  <Comment key={item.id} item={item} formatDate={formatDate} />
+                  <Comment key={item.id} item={item} />
                 ))}
               </div>
             )}

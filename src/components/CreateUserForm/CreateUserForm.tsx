@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 
 import { useAppDispatch } from '../../hooks';
+import { IUser } from '../../interfaces';
+import { usersActions } from '../../redux';
 import { ISetState } from '../../types';
 import { createUserValidator } from '../../validators';
 import { FormInput } from '../FormInput';
@@ -25,16 +27,8 @@ const CreateUserForm: FC<IProps> = ({ setOpenCreateUser }) => {
 
   const dispatch = useAppDispatch();
 
-  const submit = (data: any) => {
-    const dataToSend = {
-      email: data.email,
-      profile: {
-        name: data.name,
-        surname: data.surname,
-      },
-    };
-    // todo add createUser
-    // dispatch(usersActions.createUser(dataToSend));
+  const submit = (data: Partial<IUser>) => {
+    dispatch(usersActions.create(data));
     setOpenCreateUser(false);
   };
 

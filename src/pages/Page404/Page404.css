@@ -7,7 +7,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #76b852;
+    background-color: var(--main-color);
 }
 
 .Page404_img {

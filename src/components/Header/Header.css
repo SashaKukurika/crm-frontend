@@ -1,5 +1,5 @@
 button {
-  background: #43a047;
+  background: var(--second-color);
   border: none;
   border-radius: 5px;
   color: #fff;
@@ -27,7 +27,7 @@ img {
 
 .Header {
   align-items: center;
-  background-color: #76b852;
+  background-color: var(--main-color);
   color: #fff;
   display: flex;
   justify-content: space-between;

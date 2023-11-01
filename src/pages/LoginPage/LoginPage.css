@@ -1,6 +1,6 @@
 .Login_page {
     min-height: 100vh;
-    background: #76b852;
+    background: var(--main-color);
     display: flex;
     justify-content: center;
     align-items: center;

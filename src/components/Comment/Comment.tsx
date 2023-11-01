@@ -1,15 +1,15 @@
 import { FC } from 'react';
 
-import { IComment } from '../../interfaces/comment.interface';
+import { formatDate } from '../../helpers/formatDate.helper';
+import { IComment } from '../../interfaces';
 
 import './Comment.css';
 
 interface IProps {
   item: IComment;
-  formatDate: (date: Date) => string;
 }
 
-const Comment: FC<IProps> = ({ item, formatDate }) => {
+const Comment: FC<IProps> = ({ item }) => {
   const checkToLongText = (text: string): string => {
     if (text.length > 60) {
       return text.slice(0, 60) + '...';
