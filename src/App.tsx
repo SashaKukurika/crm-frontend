@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 import { MainLayout } from './layouts';
-import { AdminPage, LoginPage, OrdersPage, Page404 } from './pages';
+import { ActivatePage, AdminPage, LoginPage, OrdersPage, Page404 } from './pages';
 
 const App = () => {
   return (
@@ -11,8 +11,12 @@ const App = () => {
         {/* // path це що пишеться в урлі і при виклику link або navigate to там прописуємо одну з наших path і при
          кліку на лінк будемо переходити до element*/}
         <Route path={'/login'} element={<LoginPage />} />
+
         <Route path={'/orders'} element={<OrdersPage />} />
+
         <Route path={'/admin'} element={<AdminPage />} />
+
+        <Route path={'/activate/:activateToken'} element={<ActivatePage />} />
 
         <Route path="*" element={<Page404 />} />
       </Route>

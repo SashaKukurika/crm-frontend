@@ -55,7 +55,7 @@ const AdminPage: FC = () => {
 
             <Pagination
               totalCount={totalCount}
-              pageSize={2}
+              pageSize={5}
               currentPage={+query.get('page')}
               onPageChange={(page) =>
                 setQuery((value) => {

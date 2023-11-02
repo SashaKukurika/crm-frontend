@@ -1,31 +1,22 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { usersActions } from '../../redux';
+import { IStatistic } from '../../interfaces';
 
 import './UserStatistic.css';
 
 interface IProps {
-  id: number;
+  statistic: IStatistic;
 }
 
-const UserStatistic: FC<IProps> = ({ id }) => {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(usersActions.getStatistic({ id }));
-  }, []);
-  const { userStatistic } = useAppSelector((state) => state.usersReducer);
-  console.log(userStatistic);
+const UserStatistic: FC<IProps> = ({ statistic }) => {
   return (
     <div className={'User_statistic'}>
-      <div className={'User_statistic_item'}>total: {userStatistic?.total}</div>
-      {userStatistic &&
-        userStatistic?.statuses.map((item, index) => (
-          <div className={'User_statistic_item'} key={index}>
-            {item.status}: {item.count}
-          </div>
-        ))}
+      <div className={'User_statistic_item'}>total: {statistic?.total ? statistic?.total : 0}</div>
+      {statistic?.statuses.map((item, index) => (
+        <div className={'User_statistic_item'} key={index}>
+          {item.status}: {item.count}
+        </div>
+      ))}
     </div>
   );
 };

@@ -21,3 +21,4 @@ export * from './OrdersStatistic';
 export * from './CreateUserForm';
 export * from './User';
 export * from './UserStatistic';
+export * from './ActivateForm';

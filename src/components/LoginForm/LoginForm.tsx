@@ -34,6 +34,7 @@ const LoginForm: FC = () => {
 
   return (
     <form className={'Login_form'} onSubmit={handleSubmit(submit)}>
+      Email
       <FormInput
         type={'text'}
         name={'email'}
@@ -41,6 +42,7 @@ const LoginForm: FC = () => {
         register={register}
         error={errors.email}
       />
+      Password
       <FormInput
         type={'password'}
         name={'password'}
@@ -49,7 +51,6 @@ const LoginForm: FC = () => {
         error={errors.password}
       />
       {/* {error && <div className={'Login_form_error'}>{errorMsg}</div>}*/}
-
       <button className={'Login_form_btn button'}>{false ? 'Loading...' : 'Login'}</button>
     </form>
   );

@@ -21,10 +21,17 @@
 
 .User_button {
     padding: 10px;
+    cursor: pointer;
 }
 
-.User_button:hover {
-    cursor: pointer;
+.User_button_disabled {
+    cursor: not-allowed;
+    background-color: #C0C0C0FF;
+}
+
+.User_button_disabled:hover {
+    cursor: not-allowed;
+    background-color: #C0C0C0FF;
 }
 
 .Link {

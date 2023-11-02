@@ -11,15 +11,15 @@ export interface IUser {
   last_login: Date;
   // todo add enum
   role: string;
+  statistic?: IStatistic;
 }
 
-export interface IUserWithPagination {
+export interface IUserWithStatisticAndPagination {
   users: IUser[];
   totalCount: number;
 }
 
 export interface IStatistic {
   total: number;
-  [userId: number]: any;
   statuses: Status[];
 }

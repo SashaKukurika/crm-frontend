@@ -16,7 +16,10 @@ const urls = {
 
   users: {
     users,
-    getStatistic: (id: number): string => `${users}/statistic/${id}`,
+    getStatistic: (id: number): string => `${users}/${id}/statistic`,
+    getActivateToken: (id: number): string => `${users}/${id}/activateToken`,
+    ban: (id: number): string => `${users}/${id}/ban`,
+    unban: (id: number): string => `${users}/${id}/unban`,
   },
   auth: {
     auth,
