@@ -5,3 +5,4 @@ export * from './params.interface';
 export * from './auth.interface';
 export * from './group.interface';
 export * from './comment.interface';
+export * from './tokens.interface';

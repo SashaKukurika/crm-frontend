@@ -23,8 +23,10 @@ const urls = {
   },
   auth: {
     auth,
+    me: `${auth}/me`,
     login: `${auth}/login`,
-    refreshToken: `${auth}/refresh-token`,
+    refreshToken: `${auth}/refresh`,
+    activateUser: (activateToken: string) => `${auth}/activate/${activateToken}`,
   },
   groups: { groups },
 };

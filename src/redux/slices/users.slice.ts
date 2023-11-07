@@ -65,6 +65,18 @@ const create = createAsyncThunk<IUser, Partial<IUser>>(
   },
 );
 
+const activate = createAsyncThunk<void, { activateToken: string; password: string }>(
+  'usersSlice/activate',
+  async ({ activateToken, password }, { rejectWithValue }) => {
+    try {
+      const { data } = await userService.activate(activateToken, password);
+      return data;
+    } catch (e) {
+      const err = e as AxiosError;
+      return rejectWithValue(err.response.data);
+    }
+  },
+);
 const ban = createAsyncThunk<IUser, { id: number }>(
   'usersSlice/ban',
   async ({ id }, { rejectWithValue }) => {
@@ -104,6 +116,9 @@ const slice = createSlice({
       .addCase(create.fulfilled, (state, action) => {
         state.users = [action.payload, ...state.users];
       })
+      // .addCase(activate.fulfilled, () => {
+      //   history.;
+      // })
       .addCase(getStatistic.fulfilled, (state, action) => {
         state.userStatistic = action.payload;
       })
@@ -117,13 +132,13 @@ const slice = createSlice({
       })
       .addMatcher(isPending(create, getAll), (state) => {
         state.loading = true;
-        state.error = null;
       })
       .addMatcher(isFulfilled(), (state) => {
         state.loading = false;
         state.error = null;
       })
       .addMatcher(isRejectedWithValue(), (state, action) => {
+        console.log(action.payload);
         state.error = action.payload;
         state.loading = false;
       }),
@@ -138,6 +153,7 @@ const usersActions = {
   ban,
   unban,
   getStatistic,
+  activate,
 };
 
 export { usersReducer, usersActions };

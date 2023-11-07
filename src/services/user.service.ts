@@ -12,6 +12,8 @@ const userService = {
   createUser: (user: Partial<IUser>): IRes<IUser> => axiosService.post(urls.users.users, user),
   // todo що повертаю
   getActivateToken: (id: number) => axiosService.get(urls.users.getActivateToken(id)),
+  activate: (activateToken: string, password: string) =>
+    axiosService.patch(urls.auth.activateUser(activateToken), { password }),
   ban: (id: number): IRes<IUser> => axiosService.patch(urls.users.ban(id)),
   unban: (id: number): IRes<IUser> => axiosService.patch(urls.users.unban(id)),
 };

@@ -14,3 +14,7 @@
     width: 100%;
     border-radius: 10px;
 }
+
+.Login_form_error {
+    color: #e00000;
+}

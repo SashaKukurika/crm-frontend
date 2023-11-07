@@ -25,15 +25,18 @@ const ActivateForm: FC = () => {
     resolver: joiResolver(activateValidator),
   });
 
-  const submit = async (data: any) => {
-    // dispatch(usersActions.activateUser({ activateToken, password: data.password }));
-    navigate('/login');
+  const submit = async (data: { password: string; confirmPassword: string }) => {
+    const {
+      meta: { requestStatus },
+    } = await dispatch(usersActions.activate({ activateToken, password: data.password }));
+    if (requestStatus === 'fulfilled') {
+      navigate('/login');
+    }
   };
 
-  const linkIsNotRelevant = error && error.details === 'Token invalid or expired';
   return (
     <div className={'Activate_form'}>
-      {linkIsNotRelevant ? (
+      {error ? (
         <div className={'Activate_form_error'}>
           <div>The link is not valid, please contact the administrator to solve the problem</div>
           <button onClick={() => navigate('/login')} className={'Activate_form_button'}>
