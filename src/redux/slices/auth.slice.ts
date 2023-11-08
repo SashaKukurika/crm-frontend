@@ -33,6 +33,17 @@ const login = createAsyncThunk<IUser, IAuth>(
     }
   },
 );
+
+const me = createAsyncThunk<IUser, void>('authSlice/me', async (_, { rejectWithValue }) => {
+  try {
+    const { data } = await authService.me();
+    return data;
+  } catch (e) {
+    const err = e as AxiosError;
+    return rejectWithValue(err.response.data);
+  }
+});
+
 const slice = createSlice({
   name: 'authSlice',
   initialState,
@@ -41,7 +52,9 @@ const slice = createSlice({
     builder
       .addCase(login.fulfilled, (state, action) => {
         state.me = action.payload;
-        // history.replace("/orders");
+      })
+      .addCase(me.fulfilled, (state, action) => {
+        state.me = action.payload;
       })
       .addMatcher(isPending(), (state) => {
         state.loading = true;
@@ -61,6 +74,7 @@ const { actions, reducer: authReducer } = slice;
 const authActions = {
   ...actions,
   login,
+  me,
 };
 
 export { authReducer, authActions };

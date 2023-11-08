@@ -3,15 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { authService } from '../../services';
+
 import './LogOut.css';
 
 const LogOut: FC = () => {
   const navigate = useNavigate();
 
   const logOut = () => {
-    // todo delete tokens
-    // authService.deleteTokens();
-    console.log('logout');
+    authService.deleteTokens();
     navigate('/login');
   };
 

@@ -4,4 +4,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+}
+
+.Login_page p {
+    font-size: 1.2rem;
 }

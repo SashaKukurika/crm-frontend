@@ -18,11 +18,11 @@ interface IProps {
 }
 
 const OrderForm: FC<IProps> = ({ setParams, query }) => {
+  const dispatch = useAppDispatch();
   const { register, reset } = useForm<IOrder>({
     mode: 'all',
   });
 
-  const dispatch = useAppDispatch();
   const { groups } = useAppSelector((state) => state.groupReducer);
 
   useEffect(() => {

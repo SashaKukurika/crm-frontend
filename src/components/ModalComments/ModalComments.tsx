@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from 'react';
 
-import { IComment } from '../../interfaces/comment.interface';
+import { IComment } from '../../interfaces';
 import { ISetState } from '../../types';
 import { ModalComment } from '../ModalComment';
 import { Pagination } from '../Pagination';
@@ -20,7 +20,7 @@ const ModalComments: FC<IProps> = ({ comments, setOpenModalComments }) => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
     return comments.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage]);
+  }, [currentPage, comments]);
 
   return (
     <div className={'Modal_comments'}>

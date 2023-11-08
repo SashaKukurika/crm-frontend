@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { unstable_HistoryRouter as BrowserRouter } from 'react-router-dom';
 
 import App from './App';
 import { setupStore } from './redux';
+import { history } from './services';
 
 import './index.css';
 
@@ -14,7 +15,8 @@ const store = setupStore();
 
 root.render(
   <Provider store={store}>
-    <BrowserRouter>
+    {/* @ts-expect-error*/}
+    <BrowserRouter history={history}>
       <App />
     </BrowserRouter>
   </Provider>,

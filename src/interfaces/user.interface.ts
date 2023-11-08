@@ -1,3 +1,5 @@
+import { UserRolesEnum } from '../enums';
+
 import { Status } from './order.interface';
 
 export interface IUser {
@@ -10,7 +12,7 @@ export interface IUser {
   created_at: Date;
   last_login: Date;
   // todo add enum
-  role: string;
+  role: UserRolesEnum;
   statistic?: IStatistic;
 }
 

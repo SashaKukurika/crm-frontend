@@ -30,7 +30,6 @@ const OrdersPage: FC = () => {
     };
   }, [query]);
 
-  // todo завжди завантажується сторінка якщо я додаю ordersWithPagination в deps щоб мінялась відразу група
   useEffect(() => {
     dispatch(ordersActions.getAllWithPagination(debouncedValue));
   }, [dispatch, debouncedValue]);
