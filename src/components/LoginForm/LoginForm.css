@@ -16,5 +16,5 @@
 }
 
 .Login_form_error {
-    color: #e00000;
+    color: var(--error-color);
 }

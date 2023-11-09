@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 
 import { useAppDispatch } from '../../hooks';
+import { IUser } from '../../interfaces';
 import { ordersActions } from '../../redux';
 import { commentValidator } from '../../validators';
 import { FormInput } from '../FormInput';
@@ -12,11 +13,10 @@ import './CommentForm.css';
 interface IProps {
   id: number;
   isButtonDisabled: boolean;
-  // todo add type for userprofile
-  adminProfile: any;
+  me: IUser;
 }
 
-const CommentForm: FC<IProps> = ({ id, isButtonDisabled, adminProfile }) => {
+const CommentForm: FC<IProps> = ({ id, isButtonDisabled, me }) => {
   const {
     register,
     reset,
@@ -29,11 +29,10 @@ const CommentForm: FC<IProps> = ({ id, isButtonDisabled, adminProfile }) => {
 
   const dispatch = useAppDispatch();
 
-  const submit = async (data: any) => {
+  const submit = async (data: { text: string }) => {
     const commentInfo = {
       ...data,
-      // todo add id from userprofile
-      userId: 1,
+      userId: me.id,
     };
     dispatch(ordersActions.addComment({ id, commentInfo }));
     reset();

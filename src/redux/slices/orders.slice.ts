@@ -8,14 +8,14 @@ import {
 import { AxiosError } from 'axios';
 
 import { CourseStatusEnum } from '../../enums';
-import { IComment, IError, IOrder, IOrdersStatistic, IOrderWithPagination } from '../../interfaces';
+import { IComment, IOrder, IOrdersStatistic, IOrderWithPagination } from '../../interfaces';
 import { orderService } from '../../services';
 
 interface IState {
   orders: IOrder[];
   ordersStatistic: IOrdersStatistic;
   loading: boolean;
-  error: IError;
+  error: any;
   totalCount: number;
 }
 
@@ -54,6 +54,7 @@ const updateById = createAsyncThunk<IOrder, { id: number; order: Partial<IOrder>
   },
 );
 
+// todo check commentInfo
 // перше що повертаю, друге що передаю в функцію
 const addComment = createAsyncThunk<IComment, { id: number; commentInfo: any }>(
   'ordersSlice/addComment',
@@ -105,7 +106,7 @@ const slice = createSlice({
               comments: updatedComments,
               // якщо певний статус уже був ми його незмінюємо, якщож не було ставимо в роботу
               status: order.status ? order.status : CourseStatusEnum.IN_WORK,
-              manager: action.payload.user,
+              user: action.payload.user,
             };
           }
           return order;

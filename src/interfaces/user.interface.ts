@@ -11,7 +11,6 @@ export interface IUser {
   is_active: boolean;
   created_at: Date;
   last_login: Date;
-  // todo add enum
   role: UserRolesEnum;
   statistic?: IStatistic;
 }

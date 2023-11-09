@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 
 import { formatDate } from '../../helpers/formatDate.helper';
+import { useAppSelector } from '../../hooks';
 import { IOrder } from '../../interfaces';
 import { ClientForm } from '../ClientForm';
 import { Comment } from '../Comment';
@@ -31,16 +32,14 @@ const Order: FC<IProps> = ({ order }) => {
     alreadyPaid,
     group,
     comments,
+    user,
   } = order;
-
   const [tableActive, setTableActive] = useState(false);
-
   const [openModalForm, setOpenModalForm] = useState(false);
-
   const [openModalComments, setOpenModalComments] = useState(false);
-  // todo import manager
-  // const isButtonDisabled = manager !== null && adminProfile?.profile.name === manager?.name;
-  const isButtonDisabled = false;
+
+  const { me } = useAppSelector((state) => state.authReducer);
+  const isButtonDisabled = user !== null && me?.id !== user?.id;
 
   return (
     <div
@@ -108,9 +107,7 @@ const Order: FC<IProps> = ({ order }) => {
       </div>
 
       <div className={'Orders_table_cell'} onClick={() => setTableActive(!tableActive)}>
-        {/* todo add manager*/}
-        {/* {manager ? manager : 'null'}*/}
-        manager
+        {user?.name ? user.name : 'null'}
       </div>
 
       <div className={`Orders_table_details ${tableActive ? 'Orders_table_details_visible' : ''}`}>
@@ -129,11 +126,7 @@ const Order: FC<IProps> = ({ order }) => {
               </div>
             )}
 
-            <CommentForm
-              id={id}
-              isButtonDisabled={isButtonDisabled}
-              adminProfile={'adminProfile'}
-            />
+            <CommentForm id={id} isButtonDisabled={isButtonDisabled} me={me} />
           </div>
 
           <button
@@ -151,7 +144,7 @@ const Order: FC<IProps> = ({ order }) => {
           </Modal>
 
           <Modal closeModal={setOpenModalForm} openModal={openModalForm}>
-            <ClientForm order={order} setOpenModalForm={setOpenModalForm} />
+            <ClientForm order={order} setOpenModalForm={setOpenModalForm} me={me} />
           </Modal>
         </div>
       </div>

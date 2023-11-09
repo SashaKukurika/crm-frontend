@@ -38,6 +38,10 @@
     flex-direction: column;
 }
 
+.Client_form_item_error {
+    color: var(--error-color);
+}
+
 .Client_form_input_buttons {
     display: flex;
 }

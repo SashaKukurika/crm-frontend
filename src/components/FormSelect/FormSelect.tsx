@@ -1,11 +1,10 @@
 import { FC } from 'react';
 import { UseFormRegister } from 'react-hook-form';
 
-import { IOrder } from '../../interfaces';
-import { IGroup } from '../../interfaces/group.interface';
+import { IGroup, IOrder } from '../../interfaces';
 
 import './FormSelect.css';
-
+// todo check all form select
 interface IProps {
   register: UseFormRegister<IOrder | any>;
   label: string;

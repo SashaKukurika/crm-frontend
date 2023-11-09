@@ -4,7 +4,7 @@ function commonEmailValidator() {
   return Joi.string()
     .min(10)
     .max(254)
-    .regex(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
+    .regex(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)
     .empty()
     .required()
     .messages({

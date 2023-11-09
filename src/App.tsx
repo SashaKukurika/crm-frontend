@@ -4,14 +4,14 @@ import { UserRolesEnum } from './enums';
 import { RequiredAuth } from './hoc';
 import { MainLayout } from './layouts';
 import { ActivatePage, AdminPage, LoginPage, OrdersPage, Page404 } from './pages';
-
+// todo після скидання фільтрів не працює чекбокс з першого разу
+// todo якщо міняю статус на new то пропадає менеджер стає нал і будь хто знову може взяти в роботу
 const App = () => {
   return (
     <Routes>
       <Route path={'/'} element={<MainLayout />}>
         <Route index element={<Navigate to={'/login'} />} />
-        {/* // path це що пишеться в урлі і при виклику link або navigate to там прописуємо одну з наших path і при
-         кліку на лінк будемо переходити до element*/}
+
         <Route path={'/login'} element={<LoginPage />} />
 
         <Route element={<RequiredAuth />}>

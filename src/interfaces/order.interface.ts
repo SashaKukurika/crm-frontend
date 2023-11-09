@@ -41,10 +41,10 @@ export interface IOrder {
   status: string;
 
   group: IGroup;
-  // todo type
+
   comments: IComment[];
 
-  manager?: IUser;
+  user: IUser;
 }
 export interface IOrdersStatistic {
   total: number;
@@ -54,5 +54,6 @@ export interface IOrdersStatistic {
 
 export interface Status {
   status: CourseStatusEnum;
+
   count: number;
 }

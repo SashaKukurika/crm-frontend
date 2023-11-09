@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { IComment } from '../../interfaces/comment.interface';
+import { IComment } from '../../interfaces';
 
 import './ModalComment.css';
 

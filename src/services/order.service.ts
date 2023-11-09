@@ -9,6 +9,7 @@ const orderService = {
     axiosService.get(urls.orders.orders, { params }),
   updateById: (id: number, order: Partial<IOrder>) =>
     axiosService.patch(urls.orders.getById(id), order),
+  // todo check commentInfo
   addComment: (id: number, commentInfo: any) =>
     axiosService.post(urls.orders.addComment(id), commentInfo),
   getOrdersStatistic: (): IRes<IOrdersStatistic> => axiosService.get(urls.orders.getStatistic),

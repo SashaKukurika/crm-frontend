@@ -7,12 +7,11 @@ import {
 } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 
-import { IStatistic, IUser, IUserWithStatisticAndPagination } from '../../interfaces';
+import { IUser, IUserWithStatisticAndPagination } from '../../interfaces';
 import { userService } from '../../services';
 
 interface IState {
   users: IUser[];
-  userStatistic: IStatistic;
   totalCount: number;
   loading: boolean;
   error: any;
@@ -20,7 +19,6 @@ interface IState {
 
 const initialState: IState = {
   users: [],
-  userStatistic: null,
   totalCount: 0,
   loading: true,
   error: null,
@@ -31,19 +29,6 @@ const getAll = createAsyncThunk<IUserWithStatisticAndPagination, URLSearchParams
   async (params, { rejectWithValue }) => {
     try {
       const { data } = await userService.getAll(params);
-      return data;
-    } catch (e) {
-      const err = e as AxiosError;
-      return rejectWithValue(err.response.data);
-    }
-  },
-);
-
-const getStatistic = createAsyncThunk<IStatistic, { id: number }>(
-  'usersSlice/getStatistic',
-  async ({ id }, { rejectWithValue }) => {
-    try {
-      const { data } = await userService.getStatistic(id);
       return data;
     } catch (e) {
       const err = e as AxiosError;
@@ -116,12 +101,6 @@ const slice = createSlice({
       .addCase(create.fulfilled, (state, action) => {
         state.users = [action.payload, ...state.users];
       })
-      // .addCase(activate.fulfilled, () => {
-      //   history.;
-      // })
-      .addCase(getStatistic.fulfilled, (state, action) => {
-        state.userStatistic = action.payload;
-      })
       .addCase(ban.fulfilled, (state, action) => {
         const user = state.users.find((user) => user.id === action.payload.id);
         user.is_active = action.payload.is_active;
@@ -138,7 +117,6 @@ const slice = createSlice({
         state.error = null;
       })
       .addMatcher(isRejectedWithValue(), (state, action) => {
-        console.log(action.payload);
         state.error = action.payload;
         state.loading = false;
       }),
@@ -152,7 +130,6 @@ const usersActions = {
   create,
   ban,
   unban,
-  getStatistic,
   activate,
 };
 

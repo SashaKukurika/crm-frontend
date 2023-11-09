@@ -21,5 +21,5 @@
 }
 
 .Form_input_input_red {
-    border: 2px solid #e00000;
+    border: 2px solid var(--error-color);
 }

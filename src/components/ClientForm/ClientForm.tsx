@@ -1,11 +1,13 @@
 import { FC, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 import { CourseFormatEnum, CoursesEnum, CourseStatusEnum, CourseTypeEnum } from '../../enums';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { IOrder } from '../../interfaces';
+import { IOrder, IUser } from '../../interfaces';
 import { groupActions, ordersActions } from '../../redux';
 import { ISetState } from '../../types';
+import { clientUpdateValidator } from '../../validators';
 import { FormInput } from '../FormInput';
 import { FormSelect } from '../FormSelect';
 
@@ -13,9 +15,10 @@ import './ClientForm.css';
 interface IProps {
   order: IOrder;
   setOpenModalForm: ISetState<boolean>;
+  me: IUser;
 }
 
-const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
+const ClientForm: FC<IProps> = ({ order, setOpenModalForm, me }) => {
   const {
     id,
     name,
@@ -30,10 +33,10 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
     sum,
     alreadyPaid,
     group,
-    // todo add manager for status: 'manager' === null ? 'In work' : status,
+    user,
   } = order;
 
-  const { groups } = useAppSelector((state) => state.groupReducer);
+  const { groups, error } = useAppSelector((state) => state.groupReducer);
 
   const {
     handleSubmit,
@@ -51,13 +54,13 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
       course: course,
       course_format: course_format,
       course_type: course_type,
-      status: 'manager' === null ? 'In work' : status,
+      status: user === null ? 'In work' : status,
       sum: sum,
       alreadyPaid: alreadyPaid,
       group: group ? group.name : '',
     },
-    // todo add resolver
-    // resolver: yupResolver(clientValidator),
+    // todo неможу через валідатор надсилати
+    resolver: joiResolver(clientUpdateValidator),
   });
 
   const dispatch = useAppDispatch();
@@ -66,24 +69,28 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
 
   const submit: SubmitHandler<IOrder> = async (data: any) => {
     if (groupInput) {
-      await dispatch(groupActions.create({ name: data.group }));
+      const {
+        meta: { requestStatus },
+      } = await dispatch(groupActions.create({ name: data.group }));
+      if (requestStatus === 'rejected') {
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        dispatch(groupActions.clearError());
+      }
       setGroupInput((prev) => !prev);
       setValue('group', data.group);
     } else {
       const cleanedData = Object.fromEntries(
         Object.entries(data).filter(([, value]) => value !== '' && value !== null),
       );
-      dispatch(ordersActions.updateById({ id, order: cleanedData }));
-      console.log(cleanedData);
+      dispatch(ordersActions.updateById({ id, order: { ...cleanedData, user: me } }));
     }
   };
 
   const changeGroupInput = () => {
-    // e.preventDefault();
     setGroupInput(!groupInput);
     !groupInput ? setValue('group', '') : setValue('group', group ? group.name : '');
   };
-  // todo add errors from form
+
   return (
     <form className={'Client_form'} onSubmit={handleSubmit(submit)}>
       <div className={'Client_form_inputs'}>
@@ -95,7 +102,7 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
               name={'group'}
               label={'Group'}
               register={register}
-              // error={errors.group}
+              error={errors.group}
             />
             <div className={'Client_form_input_buttons'}>
               <button className={'Client_form_input_button'} type={'submit'}>
@@ -105,7 +112,7 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
                 Select
               </button>
             </div>
-            {/* {error && <div>{error.name}</div>}*/}
+            {error && <div className={'Client_form_item_error'}>{error.message[0]}</div>}
           </div>
         ) : (
           <div className={'Client_form_item'}>
@@ -142,7 +149,7 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
             name={'name'}
             label={'Name'}
             register={register}
-            // error={errors.name}
+            error={errors.name}
           />
         </div>
 
@@ -153,7 +160,7 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
             name={'sum'}
             label={'Sum'}
             register={register}
-            // error={errors.sum}
+            error={errors.sum}
           />
         </div>
 
@@ -164,6 +171,7 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
             name={'surname'}
             label={'Surname'}
             register={register}
+            error={errors.surname}
           />
         </div>
 
@@ -174,6 +182,7 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
             name={'alreadyPaid'}
             label={'Already paid'}
             register={register}
+            error={errors.alreadyPaid}
           />
         </div>
 
@@ -184,6 +193,7 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
             name={'email'}
             label={'Email'}
             register={register}
+            error={errors.email}
           />
         </div>
 
@@ -199,7 +209,14 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
         </div>
 
         <div className={'Client_form_item'}>
-          <FormInput id={phone} type={'text'} name={'phone'} label={'Phone'} register={register} />
+          <FormInput
+            id={phone}
+            type={'text'}
+            name={'phone'}
+            label={'Phone'}
+            register={register}
+            error={errors.phone}
+          />
         </div>
 
         <div className={'Client_form_item'}>
@@ -220,7 +237,7 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm }) => {
             id={'age'}
             label={'Age'}
             register={register}
-            // error={errors.age}
+            error={errors.age}
           />
         </div>
 

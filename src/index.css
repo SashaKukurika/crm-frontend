@@ -32,4 +32,5 @@ button:hover {
     --main-color: #76b852;
     --second-color: #43A047;
     --hover-color: #388E3C;
+    --error-color: #e00000;
 }

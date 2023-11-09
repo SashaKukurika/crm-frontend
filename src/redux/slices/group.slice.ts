@@ -7,23 +7,17 @@ import {
 } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 
-import { IError, IGroup } from '../../interfaces';
+import { IGroup } from '../../interfaces';
 import { groupService } from '../../services';
 
 interface IState {
   groups: IGroup[];
-  count: 0;
-  previousPage: string;
-  nextPage: string;
   loading: boolean;
-  error: IError;
+  error: any;
 }
 
 const initialState: IState = {
   groups: [],
-  count: 0,
-  previousPage: null,
-  nextPage: null,
   loading: false,
   error: null,
 };
@@ -46,7 +40,6 @@ const create = createAsyncThunk<IGroup, { name: string }>(
   async ({ name }, { rejectWithValue }) => {
     try {
       const { data } = await groupService.create(name);
-      console.log(data);
       return data;
     } catch (e) {
       const err = e as AxiosError;
@@ -58,7 +51,11 @@ const create = createAsyncThunk<IGroup, { name: string }>(
 const slice = createSlice({
   name: 'groupSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    clearError: (state) => {
+      state.error = null;
+    },
+  },
   extraReducers: (builder) =>
     builder
       .addCase(getAll.fulfilled, (state, action) => {

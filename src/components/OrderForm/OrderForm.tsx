@@ -23,6 +23,7 @@ const OrderForm: FC<IProps> = ({ setParams, query }) => {
     mode: 'all',
   });
 
+  const { me } = useAppSelector((state) => state.authReducer);
   const { groups } = useAppSelector((state) => state.groupReducer);
 
   useEffect(() => {
@@ -167,21 +168,17 @@ const OrderForm: FC<IProps> = ({ setParams, query }) => {
         </div>
       </div>
 
-      {/* todo add Filter_orders_checkbox_button*/}
       <div className={'Filter_orders_checkbox_button'}>
         <label>
-          {/* todo change register for manager*/}
           <input
             className={'Filter_orders_checkbox'}
-            name={'manager'}
+            name={'user'}
             type={'checkbox'}
             value={''}
             onClick={(e: any) =>
-              e.target.checked
-                ? (e.target.value = 'adminProfile.profile.name')
-                : (e.target.value = '')
+              e.target.checked ? (e.target.value = me?.name) : (e.target.value = '')
             }
-            // todo register user and at back
+            {...register('user')}
           />
           My
         </label>

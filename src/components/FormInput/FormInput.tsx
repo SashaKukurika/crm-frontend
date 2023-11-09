@@ -4,7 +4,7 @@ import { FieldError, FieldErrorsImpl, Merge, UseFormRegister } from 'react-hook-
 import { IOrder } from '../../interfaces';
 
 import './FormInput.css';
-
+// todo check all form inputs
 interface IProps {
   register: UseFormRegister<IOrder | any>;
   label: string;
