@@ -7,6 +7,7 @@ function commonEmailValidator() {
     .regex(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)
     .empty()
     .required()
+    .lowercase()
     .messages({
       'string.base': 'Email should be a string.',
       'string.min': 'Email should have at least {#limit} characters.',

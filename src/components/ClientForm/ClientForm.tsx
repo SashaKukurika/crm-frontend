@@ -60,14 +60,15 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm, me }) => {
       group: group ? group.name : '',
     },
     // todo неможу через валідатор надсилати
-    resolver: joiResolver(clientUpdateValidator),
+    // resolver: joiResolver(clientUpdateValidator),
   });
 
   const dispatch = useAppDispatch();
 
   const [groupInput, setGroupInput] = useState(false);
 
-  const submit: SubmitHandler<IOrder> = async (data: any) => {
+  const submit = async (data: any) => {
+    console.log(data);
     if (groupInput) {
       const {
         meta: { requestStatus },
@@ -80,8 +81,9 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm, me }) => {
       setValue('group', data.group);
     } else {
       const cleanedData = Object.fromEntries(
-        Object.entries(data).filter(([, value]) => value !== '' && value !== null),
+        Object.entries(data).filter(([, value]) => value !== '' && value != null),
       );
+      console.log(cleanedData);
       dispatch(ordersActions.updateById({ id, order: { ...cleanedData, user: me } }));
     }
   };

@@ -8,7 +8,13 @@ import {
 import { AxiosError } from 'axios';
 
 import { CourseStatusEnum } from '../../enums';
-import { IComment, IOrder, IOrdersStatistic, IOrderWithPagination } from '../../interfaces';
+import {
+  IComment,
+  ICommentInfo,
+  IOrder,
+  IOrdersStatistic,
+  IOrderWithPagination,
+} from '../../interfaces';
 import { orderService } from '../../services';
 
 interface IState {
@@ -54,9 +60,8 @@ const updateById = createAsyncThunk<IOrder, { id: number; order: Partial<IOrder>
   },
 );
 
-// todo check commentInfo
 // перше що повертаю, друге що передаю в функцію
-const addComment = createAsyncThunk<IComment, { id: number; commentInfo: any }>(
+const addComment = createAsyncThunk<IComment, { id: number; commentInfo: ICommentInfo }>(
   'ordersSlice/addComment',
   async ({ id, commentInfo }, { rejectWithValue }) => {
     try {

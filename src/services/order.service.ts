@@ -1,5 +1,12 @@
 import { urls } from '../constants';
-import { IOrder, IOrdersStatistic, IOrderWithPagination, IParams } from '../interfaces';
+import {
+  IComment,
+  ICommentInfo,
+  IOrder,
+  IOrdersStatistic,
+  IOrderWithPagination,
+  IParams,
+} from '../interfaces';
 import { IRes } from '../types';
 
 import { axiosService } from './axios.service';
@@ -7,10 +14,9 @@ import { axiosService } from './axios.service';
 const orderService = {
   getAllWithPagination: (params: URLSearchParams): IRes<IOrderWithPagination> =>
     axiosService.get(urls.orders.orders, { params }),
-  updateById: (id: number, order: Partial<IOrder>) =>
+  updateById: (id: number, order: Partial<IOrder>): IRes<IOrder> =>
     axiosService.patch(urls.orders.getById(id), order),
-  // todo check commentInfo
-  addComment: (id: number, commentInfo: any) =>
+  addComment: (id: number, commentInfo: ICommentInfo): IRes<IComment> =>
     axiosService.post(urls.orders.addComment(id), commentInfo),
   getOrdersStatistic: (): IRes<IOrdersStatistic> => axiosService.get(urls.orders.getStatistic),
   getExcel: (params: IParams) =>

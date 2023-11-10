@@ -175,9 +175,11 @@ const OrderForm: FC<IProps> = ({ setParams, query }) => {
             name={'user'}
             type={'checkbox'}
             value={''}
-            onClick={(e: any) =>
-              e.target.checked ? (e.target.value = me?.name) : (e.target.value = '')
-            }
+            checked={JSON.parse(localStorage.getItem('isChecked'))}
+            onClick={(e: any) => {
+              localStorage.setItem('isChecked', e.target.checked);
+              e.target.checked ? (e.target.value = me?.name) : (e.target.value = '');
+            }}
             {...register('user')}
           />
           My

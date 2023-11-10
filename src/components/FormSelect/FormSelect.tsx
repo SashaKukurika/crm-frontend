@@ -4,7 +4,7 @@ import { UseFormRegister } from 'react-hook-form';
 import { IGroup, IOrder } from '../../interfaces';
 
 import './FormSelect.css';
-// todo check all form select
+
 interface IProps {
   register: UseFormRegister<IOrder | any>;
   label: string;

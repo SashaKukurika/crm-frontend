@@ -7,3 +7,8 @@ export interface IComment {
   user: IUser;
   orderId?: number;
 }
+
+export interface ICommentInfo {
+  text: string;
+  userId: number;
+}

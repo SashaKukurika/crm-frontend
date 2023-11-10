@@ -8,9 +8,8 @@ const userService = {
   getAll: (params: URLSearchParams): IRes<IUserWithStatisticAndPagination> =>
     axiosService.get(urls.users.users, { params }),
   createUser: (user: Partial<IUser>): IRes<IUser> => axiosService.post(urls.users.users, user),
-  // todo що повертаю
-  getActivateToken: (id: number) => axiosService.get(urls.users.getActivateToken(id)),
-  activate: (activateToken: string, password: string) =>
+  getActivateToken: (id: number): IRes<string> => axiosService.get(urls.users.getActivateToken(id)),
+  activate: (activateToken: string, password: string): IRes<void> =>
     axiosService.patch(urls.auth.activateUser(activateToken), { password }),
   ban: (id: number): IRes<IUser> => axiosService.patch(urls.users.ban(id)),
   unban: (id: number): IRes<IUser> => axiosService.patch(urls.users.unban(id)),
