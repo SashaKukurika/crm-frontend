@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { faRotateRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,6 +18,7 @@ interface IProps {
 }
 
 const OrderForm: FC<IProps> = ({ setParams, query }) => {
+  const [checked, setChecked] = useState(JSON.parse(localStorage.getItem('isChecked')) || false);
   const dispatch = useAppDispatch();
   const { register, reset } = useForm<IOrder>({
     mode: 'all',
@@ -28,7 +29,12 @@ const OrderForm: FC<IProps> = ({ setParams, query }) => {
 
   useEffect(() => {
     dispatch(groupActions.getAll());
-  }, [dispatch]);
+    localStorage.setItem('isChecked', JSON.stringify(checked));
+  }, [dispatch, checked]);
+
+  const handleChange = () => {
+    setChecked((prev: boolean) => !prev);
+  };
 
   const resetForm = () => {
     reset();
@@ -175,9 +181,9 @@ const OrderForm: FC<IProps> = ({ setParams, query }) => {
             name={'user'}
             type={'checkbox'}
             value={''}
-            checked={JSON.parse(localStorage.getItem('isChecked'))}
+            checked={checked}
             onClick={(e: any) => {
-              localStorage.setItem('isChecked', e.target.checked);
+              handleChange();
               e.target.checked ? (e.target.value = me?.name) : (e.target.value = '');
             }}
             {...register('user')}

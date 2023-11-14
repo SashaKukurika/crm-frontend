@@ -109,8 +109,11 @@ const slice = createSlice({
             return {
               ...order,
               comments: updatedComments,
-              // якщо певний статус уже був ми його незмінюємо, якщож не було ставимо в роботу
-              status: order.status ? order.status : CourseStatusEnum.IN_WORK,
+              // якщо певний статус уже був але не New ми його незмінюємо, якщож не було чи New ставимо в роботу
+              status:
+                order.status && order.status !== CourseStatusEnum.NEW
+                  ? order.status
+                  : CourseStatusEnum.IN_WORK,
               user: action.payload.user,
             };
           }

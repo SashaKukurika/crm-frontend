@@ -11,6 +11,7 @@ const LogOut: FC = () => {
   const navigate = useNavigate();
 
   const logOut = () => {
+    localStorage.removeItem('isChecked');
     authService.deleteTokens();
     navigate('/login');
   };

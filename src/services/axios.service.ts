@@ -32,6 +32,7 @@ axiosService.interceptors.response.use(
           return axiosService(originalRequest);
         } catch (e) {
           authService.deleteTokens();
+          localStorage.removeItem('isChecked');
           isRefreshing = false;
           history.replace('/login?expSession=true');
           return Promise.reject(error);
