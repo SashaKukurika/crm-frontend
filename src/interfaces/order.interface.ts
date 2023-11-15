@@ -10,50 +10,31 @@ export interface IOrderWithPagination {
 }
 export interface IOrder {
   id: number;
-
   name: string;
-
   surname: string;
-
   email: string;
-
   phone: string;
-
   age: number;
-
   course: string;
-
   course_format: string;
-
   course_type: string;
-
   sum: number;
-
   alreadyPaid: number;
-
   created_at: Date;
-
   utm: string;
-
   msg: string;
-
   status: string;
-
   group: IGroup;
-
   comments: IComment[];
-
   user: IUser;
 }
 export interface IOrdersStatistic {
   total: number;
-
   statuses: Status[];
 }
 
 export interface Status {
   status: CourseStatusEnum;
-
   count: number;
 }
 
