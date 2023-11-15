@@ -8,7 +8,6 @@ export interface IOrderWithPagination {
   orders: IOrder[];
   totalCount: number;
 }
-
 export interface IOrder {
   id: number;
 
@@ -56,4 +55,9 @@ export interface Status {
   status: CourseStatusEnum;
 
   count: number;
+}
+
+export interface IClientForm
+  extends Omit<IOrder, 'id' | 'created_at' | 'utm' | 'msg' | 'group' | 'comments' | 'user'> {
+  group: string;
 }

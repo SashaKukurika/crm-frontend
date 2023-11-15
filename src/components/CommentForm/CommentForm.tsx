@@ -32,7 +32,7 @@ const CommentForm: FC<IProps> = ({ id, isButtonDisabled, me }) => {
   const submit = async (data: { text: string }) => {
     const commentInfo = {
       ...data,
-      userId: me.id,
+      userId: me?.id,
     };
     dispatch(ordersActions.addComment({ id, commentInfo }));
     reset();

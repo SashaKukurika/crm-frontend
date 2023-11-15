@@ -7,7 +7,6 @@ export interface IUser {
   name: string;
   surname: string;
   email: string;
-  password: string;
   is_active: boolean;
   created_at: Date;
   last_login: Date;

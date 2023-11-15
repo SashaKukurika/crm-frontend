@@ -1,10 +1,10 @@
 import { FC, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 
 import { CourseFormatEnum, CoursesEnum, CourseStatusEnum, CourseTypeEnum } from '../../enums';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { IOrder, IUser } from '../../interfaces';
+import { IClientForm, IOrder, IUser } from '../../interfaces';
 import { groupActions, ordersActions } from '../../redux';
 import { ISetState } from '../../types';
 import { clientUpdateValidator } from '../../validators';
@@ -66,7 +66,7 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm, me }) => {
 
   const [groupInput, setGroupInput] = useState(false);
 
-  const submit = async (data: any) => {
+  const submit: SubmitHandler<IClientForm> = async (data) => {
     if (groupInput) {
       const {
         meta: { requestStatus },
