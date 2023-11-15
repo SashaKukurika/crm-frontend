@@ -4,7 +4,7 @@ const activateValidator = Joi.object({
   password: Joi.string()
     .min(8)
     .max(30)
-    .pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$%^&*])'))
+    .pattern(/'(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})'/)
     .required()
     .empty()
     .messages({
