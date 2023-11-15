@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 
 import { CourseFormatEnum, CoursesEnum, CourseStatusEnum, CourseTypeEnum } from '../../enums';
@@ -57,10 +57,9 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm, me }) => {
       status: user === null ? 'In work' : status,
       sum: sum,
       alreadyPaid: alreadyPaid,
-      group: group ? group.name : '',
+      group: group.name ? group.name : '',
     },
-    // todo неможу через валідатор надсилати
-    // resolver: joiResolver(clientUpdateValidator),
+    resolver: joiResolver(clientUpdateValidator),
   });
 
   const dispatch = useAppDispatch();
@@ -68,24 +67,26 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm, me }) => {
   const [groupInput, setGroupInput] = useState(false);
 
   const submit = async (data: any) => {
-    console.log(data);
     if (groupInput) {
       const {
         meta: { requestStatus },
       } = await dispatch(groupActions.create({ name: data.group }));
+
       if (requestStatus === 'rejected') {
         await new Promise((resolve) => setTimeout(resolve, 2000));
         dispatch(groupActions.clearError());
+      } else {
+        setGroupInput((prev) => !prev);
+        setValue('group', data.group);
       }
-      setGroupInput((prev) => !prev);
-      setValue('group', data.group);
-    } else {
-      const cleanedData = Object.fromEntries(
-        Object.entries(data).filter(([, value]) => value !== '' && value != null),
-      );
-      console.log(cleanedData);
-      dispatch(ordersActions.updateById({ id, order: { ...cleanedData, user: me } }));
     }
+
+    const cleanedData = Object.fromEntries(
+      Object.entries(data).filter(
+        ([, value]) => value !== '' && value != null && !Number.isNaN(value),
+      ),
+    );
+    dispatch(ordersActions.updateById({ id, order: { ...cleanedData, user: me } }));
   };
 
   const changeGroupInput = () => {
