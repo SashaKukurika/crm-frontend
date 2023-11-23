@@ -59,7 +59,7 @@ const slice = createSlice({
   extraReducers: (builder) =>
     builder
       .addCase(getAll.fulfilled, (state, action) => {
-        state.groups = [...state.groups, ...action.payload];
+        state.groups = action.payload;
       })
       .addCase(create.fulfilled, (state, action) => {
         state.groups = [...state.groups, action.payload];
