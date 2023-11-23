@@ -79,14 +79,14 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm, me }) => {
         setGroupInput((prev) => !prev);
         setValue('group', data.group);
       }
+    } else {
+      const cleanedData = Object.fromEntries(
+        Object.entries(data).filter(
+          ([, value]) => value !== '' && value != null && !Number.isNaN(value),
+        ),
+      );
+      dispatch(ordersActions.updateById({ id, order: { ...cleanedData, user: me } }));
     }
-
-    const cleanedData = Object.fromEntries(
-      Object.entries(data).filter(
-        ([, value]) => value !== '' && value != null && !Number.isNaN(value),
-      ),
-    );
-    dispatch(ordersActions.updateById({ id, order: { ...cleanedData, user: me } }));
   };
 
   const changeGroupInput = () => {
