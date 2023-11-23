@@ -1,4 +1,4 @@
-const baseURL = process.env.BASE_URL || 'http://localhost:5000';
+const baseURL = process.env.BASE_URL || 'http://localhost:6000';
 
 const orders = '/orders';
 const groups = '/groups';
