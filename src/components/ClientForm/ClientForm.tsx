@@ -57,7 +57,7 @@ const ClientForm: FC<IProps> = ({ order, setOpenModalForm, me }) => {
       status: user === null ? 'In work' : status,
       sum: sum,
       alreadyPaid: alreadyPaid,
-      group: group.name ? group.name : '',
+      group: group?.name ? group?.name : '',
     },
     resolver: joiResolver(clientUpdateValidator),
   });
