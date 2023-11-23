@@ -5,7 +5,7 @@ $ npm install
 ```
 
 ## Before running the app
-delete this part '.example' from file name '.env.example'
+Delete this part '.example' from file name '.env.example'
 
 Start crm-backend
 
