@@ -38,6 +38,7 @@ const OrderForm: FC<IProps> = ({ setParams, query }) => {
 
   const resetForm = () => {
     reset();
+    setChecked(false);
     setParams({ target: { name: 'reset', value: 'reset' } });
   };
 
@@ -184,7 +185,7 @@ const OrderForm: FC<IProps> = ({ setParams, query }) => {
             checked={checked}
             onClick={(e: any) => {
               handleChange();
-              e.target.checked ? (e.target.value = me?.name) : (e.target.value = '');
+              e.target.checked ? (e.target.value = me?.id) : (e.target.value = '');
             }}
             {...register('user')}
           />
