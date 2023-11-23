@@ -1,4 +1,4 @@
-const baseURL = process.env.BASE_URL || 'https://crm-back-pgf4.onrender.com';
+const baseURL = process.env.REACT_APP_BASE_URL || 'http://localhost:5000';
 
 const orders = '/orders';
 const groups = '/groups';
