@@ -24,7 +24,7 @@ const Header: FC = () => {
 
   return (
     <header className={'Header'}>
-      <div onClick={() => navigate('/orders')} className={'Header_logo'}>
+      <div onClick={() => navigate('/orders?page=1')} className={'Header_logo'}>
         Logo
       </div>
 
