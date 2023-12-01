@@ -41,6 +41,7 @@ const OrdersPage: FC = () => {
     if (!text) {
       setQuery((value) => {
         value.delete(name);
+        value.set('page', '1');
         return value;
       });
     } else if (name === 'reset' && text === 'reset') {
