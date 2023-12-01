@@ -9,10 +9,9 @@ function commonEmailValidator() {
     .required()
     .lowercase()
     .messages({
-      'string.base': 'Email should be a string.',
       'string.min': '',
       'string.max': '',
-      'string.pattern.base': 'Invalid email format.',
+      'string.pattern.base': '',
       'string.empty': "Email can't be empty",
     });
 }
