@@ -4,12 +4,18 @@ import { UserRolesEnum } from './enums';
 import { RequiredAuth } from './hoc';
 import { MainLayout } from './layouts';
 import { ActivatePage, AdminPage, LoginPage, OrdersPage, Page404 } from './pages';
+import { authService } from './services';
 
 const App = () => {
+  const accessToken = authService.getAccessToken();
   return (
     <Routes>
       <Route path={'/'} element={<MainLayout />}>
-        <Route index element={<Navigate to={'/login'} />} />
+        {accessToken ? (
+          <Route index element={<Navigate to={'/orders'} />} />
+        ) : (
+          <Route index element={<Navigate to={'/login'} />} />
+        )}
 
         <Route path={'/login'} element={<LoginPage />} />
 
