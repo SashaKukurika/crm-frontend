@@ -52,7 +52,7 @@ const ActivateForm: FC = () => {
             name={'password'}
             register={register}
             error={errors.password}
-            type={'text'}
+            type={'password'}
           />
           Confirm Password
           <FormInput
@@ -61,7 +61,7 @@ const ActivateForm: FC = () => {
             name={'confirmPassword'}
             register={register}
             error={errors.confirmPassword}
-            type={'text'}
+            type={'password'}
           />
           <button className={'Activate_form_button'} disabled={!isValid} type="submit">
             Activate
