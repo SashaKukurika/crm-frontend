@@ -139,11 +139,11 @@ const Order: FC<IProps> = ({ order }) => {
             Edit
           </button>
 
-          <Modal closeModal={setOpenModalComments} openModal={openModalComments}>
+          <Modal openModal={openModalComments}>
             <ModalComments comments={comments} setOpenModalComments={setOpenModalComments} />
           </Modal>
 
-          <Modal closeModal={setOpenModalForm} openModal={openModalForm}>
+          <Modal openModal={openModalForm}>
             <ClientForm order={order} setOpenModalForm={setOpenModalForm} me={me} />
           </Modal>
         </div>

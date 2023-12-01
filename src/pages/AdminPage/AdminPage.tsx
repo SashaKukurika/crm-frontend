@@ -67,7 +67,7 @@ const AdminPage: FC = () => {
           </>
         )}
       </div>
-      <Modal closeModal={setOpenCreateUser} openModal={openCreateUser}>
+      <Modal openModal={openCreateUser}>
         <CreateUserForm setOpenCreateUser={setOpenCreateUser} />
       </Modal>
 
